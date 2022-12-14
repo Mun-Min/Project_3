@@ -5,34 +5,34 @@
 
 import streamlit as st
 from streamlit_chat import message
+from chatbot_functions import verifyUserAge
+
+st.markdown("## Investment Portfolio Generator")
 
 # Use the message function to create a chat-like UI
-message("Hello, I'm a chatbot that can generate an investment portfolio for you!", seed=1)
+message("Hello, I'm a chatbot that can generate a weighted investment portfolio for you!", seed=1)
 message("Please enter your age in the sidebar!", seed=1)
 
 # Ask the user for their age
 user_age = st.sidebar.text_input("Enter your age: ")
 
-# Check if the user has entered a response
-if user_age:
-    # Check if the user's age is a number
-    if user_age.isdigit():
-        # Convert the user's age to an integer
-        age = int(user_age)
+try: 
 
-        # Check if the age is greater than or equal to 18
-        if age >= 18:
-            # Add a message to the chat widget indicating the user is over 18 years old
-            message("You are over 18 years old! Enjoy the use of our investment portfolio generator!", seed=1)
-        else:
-            # Add a message to the chat widget indicating the user is under 18 years old
-            message("This application requires you to be at least 18 years old.", seed=1)
+    # Check if the user has entered a response
+    if user_age:
+
+        # Convert the user's age to an integer
+        age = float(user_age)
+
+        # verify the user's age 
+        verifyUserAge(age)
+    
     else:
-        # Add a message to the chat widget indicating that the app isn't sure how to respond
-        message("I'm sorry, I'm not sure how to respond to that.", seed=1)
-else:
-    # The user hasn't entered a response yet, so don't show any messages in the chat widget
-    pass
+        # The user hasn't entered a response yet, so don't show any messages in the chat widget
+        pass
+
+except ValueError:
+    message("I'm sorry, but it looks like you entered an invalid number for your age. Please enter a valid number!", seed=1)
 
 # TO:DO --> grab user's investment amount, 
 #           calculate weighted portfolio based off of 110 rule, 
