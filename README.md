@@ -1,6 +1,10 @@
 # Project_3
 
-<b>GOALS:</b> 
+<p align="center">
+  <img src="./Images/Project_Roadmap.png"/>
+</p>
+
+<b>GOALS:</b>
 
 * UPDATE ML MODELS TO INCLUDE CURRENT PRICES
 
