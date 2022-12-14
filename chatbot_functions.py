@@ -12,9 +12,9 @@ def verifyUserAge(age):
     if age >= 18:
 
         # Add a message to the chat widget indicating the user is over 18 years old
-        message("You are over 18 years old! Enjoy the use of our investment portfolio generator!", seed=1)
+        message("You are over 18 years old! Enjoy the use of our investment portfolio generator!", seed=21)
 
     else:
-        
+
         # Add a message to the chat widget indicating the user is under 18 years old or the input is not a valid age
-        message("This application requires you to be at least 18 years old.", seed=1)
+        message("This application requires you to be at least 18 years old.", seed=21)

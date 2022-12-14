@@ -10,11 +10,12 @@ from chatbot_functions import verifyUserAge
 st.markdown("## Investment Portfolio Generator")
 
 # Use the message function to create a chat-like UI
-message("Hello, I'm a chatbot that can generate a weighted investment portfolio for you!", seed=1)
-message("Please enter your age in the sidebar!", seed=1)
+message("Hello, I'm a chatbot that can generate a weighted investment portfolio for you!", seed=21)
+message("Please enter your age in the sidebar!", seed=21)
 
 # Ask the user for their age
 user_age = st.sidebar.text_input("Enter your age: ")
+message(user_age, is_user=True, seed=1)
 
 try: 
 
@@ -32,7 +33,7 @@ try:
         pass
 
 except ValueError:
-    message("I'm sorry, but it looks like you entered an invalid number for your age. Please enter a valid number!", seed=1)
+    message("I'm sorry, but it looks like you entered an invalid number for your age. Please enter a valid number!", seed=21)
 
 # TO:DO --> grab user's investment amount, 
 #           calculate weighted portfolio based off of 110 rule, 
