@@ -41,7 +41,7 @@ try:
             if user_investment_amount: 
                 if user_investment_amount.isnumeric():
                     message("Please enter a portfolio type that matches your risk tolerance (High Risk Portfolio, Low Risk Portfolio, Moderate Risk Portfolio)", seed=21, key=5)
-                    portfolio_type = st.sidebar.text_input('Choose one of the following: ')
+                    portfolio_type = st.sidebar.text_input('Enter portfolio type: ')
 
                     valid_portfolio_types = ['high risk portfolio', 'low risk portfolio', 'moderate risk portfolio', 'high risk portfolio ', 'low risk portfolio ', 'moderate risk portfolio ']
 
@@ -61,6 +61,39 @@ try:
                                 # calculate weights for portfolio
                                 determine_weights(age)
                                 allocate_portfolio(user_investment_amount)
+
+                            if str(portfolio_type).lower() == 'low risk portfolio' or str(portfolio_type).lower() == 'low risk portfolio ': 
+
+                                # generate a Low Risk Portfolio based on expected return vs risk 
+                                # stocks --> PEP, PG, KO, JNJ, BRK-B, MRK, PFE, XOM, CVX, JPM, HD, V 
+                                # bonds --> Treasury Yield 30yr 
+                                # crypto --> BTC
+
+                                portfolio_list = ['PEP', 'PG', 'KO', 'JNJ', 'BRK-B', 'MRK', 'PFE', 
+                                                  'XOM', 'CVX','JPM', 'HD', 'V', '30yr Treasury Yield', 'BTC']
+                                message('Your Low-Risk Portfolio contains the following assets: ', seed=21, key=12)
+                                message(f'{portfolio_list}', seed=21, key=13)
+
+                                # calculate weights for portfolio
+                                determine_weights(age)
+                                allocate_portfolio(user_investment_amount)
+
+                            if str(portfolio_type).lower() == 'moderate risk portfolio' or str(portfolio_type).lower() == 'moderate risk portfolio ': 
+
+                                # generate a Moderate Risk Portfolio portfolio based on expected return vs risk 
+                                # stocks --> UNH, MSFT, LLY, MA, GOOG, GOOGL, ABBV, BAC, AAPL, AMZN, META
+                                # bonds --> Treasury Yield 30yr 
+                                # crypto --> BTC
+
+                                portfolio_list = ['UNH', 'MSFT', 'LLY', 'MA', 'GOOG', 'GOOGL', 'ABBV', 
+                                                  'BAC', 'AAPL','AMZN', 'META', '30yr Treasury Yield', 'BTC']
+                                message('Your Moderate-Risk Portfolio contains the following assets: ', seed=21, key=14)
+                                message(f'{portfolio_list}', seed=21, key=15)
+
+                                # calculate weights for portfolio
+                                determine_weights(age)
+                                allocate_portfolio(user_investment_amount)
+
                         else: 
                             message("I'm sorry, but it looks like you entered an invalid portfolio type. Please enter a valid portfolio type!", seed=21)
                 else:
