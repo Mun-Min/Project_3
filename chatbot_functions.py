@@ -37,7 +37,6 @@ def determine_weights(age):
     Parameters: 
 
     age --> pass in the user's age from streamlit to be calculated through the 110 rule
-    portfolio_type --> pass in the chosen portfolio_type from streamlit to ensure weights are entered correctly
     '''
     weights_list.clear()
 
@@ -60,7 +59,7 @@ def allocate_portfolio(user_investment_amount):
     user_investment_amount --> pass in the user_investment_amount from streamlit to calculate how much money the user will invest in each asset class
     '''
     user_buying_power_allocation.clear()
-    
+
     for weight in weights_list: 
         investments_per_asset = float(user_investment_amount) * float(weight)
         user_buying_power_allocation.append('$' + str(investments_per_asset))
