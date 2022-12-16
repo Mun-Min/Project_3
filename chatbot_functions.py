@@ -64,5 +64,5 @@ def allocate_portfolio(user_investment_amount):
         investments_per_asset = float(user_investment_amount) * float(weight)
         user_buying_power_allocation.append('$' + str(investments_per_asset))
     
-    message(f'Amount of buying power allocated towards each asset class (Stocks/Bonds/Crypto): ', seed=21, key=10)
-    message(f'{user_buying_power_allocation}', seed=21, key=11)
+    message(f'I recommend allocating your buying power towards each asset class in the following format: ', seed=21, key=10)
+    message(f'(Stocks/Bonds/Crypto) -- {user_buying_power_allocation}', seed=21, key=11)

@@ -5,6 +5,7 @@
 
 import streamlit as st
 from streamlit_chat import message
+import pandas as pd
 from chatbot_functions import verifyUserAge
 from chatbot_functions import determine_weights
 from chatbot_functions import allocate_portfolio
@@ -55,8 +56,11 @@ try:
                                 # crypto --> ETH
 
                                 portfolio_list = ['TSLA', 'NVDA', '10yr Treasury Yield', 'ETH']
+                                df = pd.DataFrame({'Chosen Assets': portfolio_list})
                                 message('Your High-Risk Portfolio contains the following assets: ', seed=21, key=6)
-                                message(f'{portfolio_list}', seed=21, key=7)
+                                st.dataframe(df)
+         
+                                #message(f'{portfolio_table}', seed=21, key=7)
 
                                 # calculate weights for portfolio
                                 determine_weights(age)
@@ -71,8 +75,13 @@ try:
 
                                 portfolio_list = ['PEP', 'PG', 'KO', 'JNJ', 'BRK-B', 'MRK', 'PFE', 
                                                   'XOM', 'CVX','JPM', 'HD', 'V', '30yr Treasury Yield', 'BTC']
+                                df = pd.DataFrame({'Chosen Assets': portfolio_list})
+
                                 message('Your Low-Risk Portfolio contains the following assets: ', seed=21, key=12)
-                                message(f'{portfolio_list}', seed=21, key=13)
+                                st.dataframe(df)
+                                
+                                #message(f'{portfolio_list}', seed=21, key=13)
+                                
 
                                 # calculate weights for portfolio
                                 determine_weights(age)
@@ -87,8 +96,11 @@ try:
 
                                 portfolio_list = ['UNH', 'MSFT', 'LLY', 'MA', 'GOOG', 'GOOGL', 'ABBV', 
                                                   'BAC', 'AAPL','AMZN', 'META', '30yr Treasury Yield', 'BTC']
+                                df = pd.DataFrame({'Chosen Assets': portfolio_list})
                                 message('Your Moderate-Risk Portfolio contains the following assets: ', seed=21, key=14)
-                                message(f'{portfolio_list}', seed=21, key=15)
+                                st.dataframe(df)
+
+                                #message(f'{portfolio_list}', seed=21, key=15)
 
                                 # calculate weights for portfolio
                                 determine_weights(age)
