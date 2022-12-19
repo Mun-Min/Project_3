@@ -3,12 +3,16 @@
 # and age, utilizing Streamlit, Python, Machine Learning, & Traditional Financial Metrics.                    #
 ###############################################################################################################
 
+# import libraries 
 import streamlit as st
 from streamlit_chat import message
 import pandas as pd
+
 from chatbot_functions import verifyUserAge
 from chatbot_functions import determine_weights
 from chatbot_functions import allocate_portfolio
+from chatbot_functions import display_portfolio_allocation
+
 
 st.markdown("## Investment Portfolio Generator")
 
@@ -20,18 +24,21 @@ message("Please enter your age", seed=21)
 user_age = st.sidebar.text_input("Enter your age: ")
 message(user_age, is_user=True, seed=1)
 
-try: 
 
-    # Check if the user has entered a response
-    if user_age:
-
+# Check if the user has entered a response
+if user_age:
+    
+    if user_age.isdigit() == False: 
+        message("I'm sorry, but it looks like you entered an invalid number. Please enter a valid number!", seed=21)
+    
+    else:
         # Convert the user's age to an integer
         age = float(user_age)
-
+            
         # verify the user's age 
         verifyUserAge(age)
 
-        if age >= 18: 
+        if age >= 18 and age <= 110: 
 
             # Ask the user for their desired investment amount 
             message("Please enter your desired investment amount in USD", seed=21, key=2)
@@ -44,61 +51,78 @@ try:
                     message("Please enter a portfolio type that matches your risk tolerance (High Risk Portfolio, Low Risk Portfolio, Moderate Risk Portfolio)", seed=21, key=5)
                     portfolio_type = st.sidebar.text_input('Enter portfolio type: ')
 
-                    valid_portfolio_types = ['high risk portfolio', 'low risk portfolio', 'moderate risk portfolio', 'high risk portfolio ', 'low risk portfolio ', 'moderate risk portfolio ']
+                    valid_portfolio_types = ['high risk portfolio', 'low risk portfolio', 'moderate risk portfolio']
 
                     if portfolio_type: 
-                        if str(portfolio_type).lower() in valid_portfolio_types: 
-                            if str(portfolio_type).lower() == 'high risk portfolio' or str(portfolio_type).lower() == 'high risk portfolio ': 
+                        if str(portfolio_type).lower().strip() in valid_portfolio_types: 
+                            if str(portfolio_type).lower().strip() == 'high risk portfolio': 
 
                                 # generate a High Risk Portfolio based on expected return vs risk (MPT)
                                 # stocks --> TSLA, NVDA 
                                 # bonds --> Treasury Yield 10yr 
                                 # crypto --> ETH
 
-                                portfolio_list = ['TSLA', 'NVDA', '10yr Treasury Yield', 'ETH']
-                                df = pd.DataFrame({'Chosen Assets': portfolio_list})
+                                #portfolio_list = ['TSLA', 'NVDA', '10yr Treasury Yield', 'ETH']
+                                #df = pd.DataFrame({'Chosen Assets': portfolio_list})
+
+                                df = pd.DataFrame({'Stocks': ['TSLA', 'NVDA'], 'Bonds': ['10yr Treasury Yield', '-'], 'Crypto': ['ETH', '-']})
                                 message('Your High-Risk Portfolio contains the following assets: ', seed=21, key=6)
-                                st.dataframe(df)
-         
+                                st.table(df) 
+
                                 #message(f'{portfolio_table}', seed=21, key=7)
 
                                 # calculate weights for portfolio
                                 determine_weights(age)
                                 allocate_portfolio(user_investment_amount)
 
-                            if str(portfolio_type).lower() == 'low risk portfolio' or str(portfolio_type).lower() == 'low risk portfolio ': 
+                                display_portfolio_allocation(portfolio_type)
+                                
+                            if str(portfolio_type).lower().strip() == 'low risk portfolio': 
 
                                 # generate a Low Risk Portfolio based on expected return vs risk 
                                 # stocks --> PEP, PG, KO, JNJ, BRK-B, MRK, PFE, XOM, CVX, JPM, HD, V 
                                 # bonds --> Treasury Yield 30yr 
                                 # crypto --> BTC
 
-                                portfolio_list = ['PEP', 'PG', 'KO', 'JNJ', 'BRK-B', 'MRK', 'PFE', 
-                                                  'XOM', 'CVX','JPM', 'HD', 'V', '30yr Treasury Yield', 'BTC']
-                                df = pd.DataFrame({'Chosen Assets': portfolio_list})
+                                #portfolio_list = ['PEP', 'PG', 'KO', 'JNJ', 'BRK-B', 'MRK', 'PFE', 
+                                #                  'XOM', 'CVX','JPM', 'HD', 'V', '30yr Treasury Yield', 'BTC']
+                                #df = pd.DataFrame({'Chosen Assets': portfolio_list})
 
+                                df = pd.DataFrame(
+                                    {'Stocks': ['PEP', 'PG', 'KO', 'JNJ', 'BRK-B', 'MRK', 'PFE', 'XOM', 'CVX','JPM', 'HD', 'V'], 
+                                     'Bonds': ['30yr Treasury Yield', '-', '-', '-', '-', '-', '-', '-', '-', '-', '-', '-'], 
+                                     'Crypto': ['BTC', '-', '-', '-', '-', '-', '-', '-', '-', '-', '-', '-']
+                                    })
                                 message('Your Low-Risk Portfolio contains the following assets: ', seed=21, key=12)
-                                st.dataframe(df)
+                                st.table(df) 
                                 
                                 #message(f'{portfolio_list}', seed=21, key=13)
                                 
 
                                 # calculate weights for portfolio
-                                determine_weights(age)
+                                determine_weights(age)                               
                                 allocate_portfolio(user_investment_amount)
+    
+                                display_portfolio_allocation(portfolio_type)
 
-                            if str(portfolio_type).lower() == 'moderate risk portfolio' or str(portfolio_type).lower() == 'moderate risk portfolio ': 
+                            if str(portfolio_type).lower().strip() == 'moderate risk portfolio': 
 
                                 # generate a Moderate Risk Portfolio portfolio based on expected return vs risk 
                                 # stocks --> UNH, MSFT, LLY, MA, GOOG, GOOGL, ABBV, BAC, AAPL, AMZN, META
                                 # bonds --> Treasury Yield 30yr 
                                 # crypto --> BTC
 
-                                portfolio_list = ['UNH', 'MSFT', 'LLY', 'MA', 'GOOG', 'GOOGL', 'ABBV', 
-                                                  'BAC', 'AAPL','AMZN', 'META', '30yr Treasury Yield', 'BTC']
-                                df = pd.DataFrame({'Chosen Assets': portfolio_list})
+                                #portfolio_list = ['UNH', 'MSFT', 'LLY', 'MA', 'GOOG', 'GOOGL', 'ABBV', 
+                                #                  'BAC', 'AAPL','AMZN', 'META', '30yr Treasury Yield', 'BTC']
+                                #df = pd.DataFrame({'Chosen Assets': portfolio_list})
+
+                                df = pd.DataFrame(
+                                    {'Stocks': ['UNH', 'MSFT', 'LLY', 'MA', 'GOOG', 'GOOGL', 'ABBV', 'BAC', 'AAPL','AMZN', 'META'], 
+                                     'Bonds': ['30yr Treasury Yield', '-', '-', '-', '-', '-', '-', '-', '-', '-', '-'], 
+                                     'Crypto': ['BTC', '-', '-', '-', '-', '-', '-', '-', '-', '-', '-']
+                                    })
                                 message('Your Moderate-Risk Portfolio contains the following assets: ', seed=21, key=14)
-                                st.dataframe(df)
+                                st.table(df) 
 
                                 #message(f'{portfolio_list}', seed=21, key=15)
 
@@ -106,16 +130,15 @@ try:
                                 determine_weights(age)
                                 allocate_portfolio(user_investment_amount)
 
+                                display_portfolio_allocation(portfolio_type)
+
                         else: 
                             message("I'm sorry, but it looks like you entered an invalid portfolio type. Please enter a valid portfolio type!", seed=21)
                 else:
                     message("I'm sorry, but it looks like you entered an invalid number. Please enter a valid number!", seed=21)
-    else:
-        # The user hasn't entered a response yet, so don't show any messages in the chat widget
-        pass
-
-except ValueError:
-    message("I'm sorry, but it looks like you entered an invalid number. Please enter a valid number!", seed=21)
+else:
+    # The user hasn't entered a response yet, so don't show any messages in the chat widget
+    pass
 
 
 # TO:DO --> grab user's investment amount, 
@@ -123,3 +146,5 @@ except ValueError:
 #           display assets based off of user's chosen risk tolerance,
 #           display dataframe of forecasts (Prophet Forecasts -- Short Term/Long Term ??) for chosen assets or display Monte Carlo Simulations
 #           (in project requirments it says one or more machine learning models used, so we do not need to include LR Models or Decision Tree Models)
+#           Should we update the portfolio weights to where they are specific to each portfolio type?
+#               - Currently the 110 rule is being applied on each portfolio type

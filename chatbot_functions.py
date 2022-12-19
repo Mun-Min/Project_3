@@ -4,6 +4,11 @@
 
 from streamlit_chat import message
 import streamlit as st
+import matplotlib.pyplot as plt
+import plotly.express as px
+import pandas as pd
+from math import pi 
+
 
 def verifyUserAge(age): 
     '''
@@ -14,15 +19,17 @@ def verifyUserAge(age):
     age --> pass in the user's age from streamlit to verify if user is old enough to use the application
     '''
     # Check if the user's age is greater than or equal to 18
-    if age >= 18:
+    if age >= 18 and age <= 110:
 
         # Add a message to the chat widget indicating the user is over 18 years old
         message("You are over 18 years old! Enjoy the use of our investment portfolio generator!", seed=21)
-
+    
+    elif age > 110: 
+        message("I'm sorry, but it looks like you are too old to use this application. Please enter an age less than 110!", seed=21)
+    
     else:
-
         # Add a message to the chat widget indicating the user is under 18 years old or the input is not a valid age
-        message("This application requires you to be at least 18 years old.", seed=21)
+        message("This application requires you to be at least 18 years old!", seed=21)
 
 portfolio_list = []
 weights_list = []
@@ -50,7 +57,8 @@ def determine_weights(age):
     weights_list.append(user_bonds_crypto_weights)
     weights_list.append(user_bonds_crypto_weights)
     
-def allocate_portfolio(user_investment_amount):
+def allocate_portfolio(user_investment_amount): 
+
     '''
     This function allocates the user's buying power towards each asset class based on the weights calculated above
     
@@ -62,7 +70,84 @@ def allocate_portfolio(user_investment_amount):
 
     for weight in weights_list: 
         investments_per_asset = float(user_investment_amount) * float(weight)
-        user_buying_power_allocation.append('$' + str(investments_per_asset))
+        investments_per_asset = round(investments_per_asset, 2)
+        investments_per_asset = '${:,.2f}'.format(investments_per_asset)
+        user_buying_power_allocation.append(str(investments_per_asset))
     
+    assets = ['Stocks', 'Bonds', 'Crypto']
+    values = user_buying_power_allocation
+    #df = pd.DataFrame({'Asset': assets, 'Value': values})
     message(f'I recommend allocating your buying power towards each asset class in the following format: ', seed=21, key=10)
-    message(f'(Stocks/Bonds/Crypto) -- {user_buying_power_allocation}', seed=21, key=11)
+    
+    st.table(pd.DataFrame({'Asset': assets, 'Value': values}))
+    
+    #message(f'(Stocks/Bonds/Crypto) -- {user_buying_power_allocation}', seed=21, key=11)
+
+def display_portfolio_allocation(portfolio_type): 
+    if str(portfolio_type).lower().strip() == 'low risk portfolio':
+        
+        # Set the labels for the pie chart
+        # portfolio_list = ['PEP', 'PG', 'KO', 'JNJ', 'BRK-B', 'MRK', 'PFE', 
+        #               'XOM', 'CVX','JPM', 'HD', 'V', '30yr Treasury Yield', 'BTC']
+
+        # Set the labels for the pie chart
+        labels = ["Stocks", "Bonds", "Crypto"]
+
+        # Set the sizes for each pie slice based on the weights calculated in the determine_weights function
+        sizes = weights_list 
+
+        # Set the colors for each pie slice
+        #colors = ['#ff9999','#66b3ff','#99ff99']
+
+        # Set the stock lists for each asset type
+        stocks = ['PEP', 'PG', 'KO', 'JNJ', 'BRK-B', 'MRK', 'PFE', 'XOM', 'CVX','JPM', 'HD', 'V']
+        bonds = ['30yr Treasury Yield']
+        crypto = ['BTC']
+
+        # Create a list of lists containing the stock lists for each asset type
+        #hover_data = [[', '.join(stocks)], [', '.join(bonds)], [', '.join(crypto)]]
+
+        # Create the pie chart using the go.Pie object
+        fig = px.pie(values=sizes, names=labels, title='Asset Allocation', hole=.3)
+
+        # Display the pie chart using st.plotly_chart
+        st.plotly_chart(fig)    
+
+    if str(portfolio_type).lower().strip() == 'moderate risk portfolio':
+        
+        # Set the labels for the pie chart
+        # labels = ['UNH', 'MSFT', 'LLY', 'MA', 'GOOG', 'GOOGL', 'ABBV', 
+        #           'BAC', 'AAPL','AMZN', 'META', '30yr Treasury Yield', 'BTC']
+
+        labels = ["Stocks", "Bonds", "Crypto"]
+
+        # Set the sizes for each pie slice based on the weights calculated in the determine_weights function
+        sizes = weights_list 
+
+        # Set the colors for each pie slice
+        #colors = ['#ff9999','#66b3ff','#99ff99']
+
+        # Create the pie chart using the go.Pie object
+        fig = px.pie(values=sizes, names=labels, title='Asset Allocation', hole=.3)
+
+        # Display the pie chart using st.plotly_chart
+        st.plotly_chart(fig)
+
+    if str(portfolio_type).lower().strip() == 'high risk portfolio':
+        
+        # Set the labels for the pie chart
+        #labels = ['TSLA', 'NVDA', '10yr Treasury Yield', 'ETH']
+
+        labels = ["Stocks", "Bonds", "Crypto"]
+
+        # Set the sizes for each pie slice based on the weights calculated in the determine_weights function
+        sizes = weights_list 
+
+        # Set the colors for each pie slice
+        #colors = ['#ff9999','#66b3ff','#99ff99']
+
+        # Create the pie chart using the go.Pie object
+        fig = px.pie(values=sizes, names=labels, title='Asset Allocation', hole=.3)
+
+        # Display the pie chart using st.plotly_chart
+        st.plotly_chart(fig)
