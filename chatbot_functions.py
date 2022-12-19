@@ -58,7 +58,6 @@ def determine_weights(age):
     weights_list.append(user_bonds_crypto_weights)
     
 def allocate_portfolio(user_investment_amount): 
-
     '''
     This function allocates the user's buying power towards each asset class based on the weights calculated above
     
@@ -84,6 +83,14 @@ def allocate_portfolio(user_investment_amount):
     #message(f'(Stocks/Bonds/Crypto) -- {user_buying_power_allocation}', seed=21, key=11)
 
 def display_portfolio_allocation(portfolio_type): 
+    '''
+    This function displays the user's portfolio allocation via a plotly pie chart 
+    
+    Parameters: 
+
+    portfolio_type --> pass in the portfolio_type from streamlit to check which portfolio the user chose
+    '''
+
     if str(portfolio_type).lower().strip() == 'low risk portfolio':
         
         # Set the labels for the pie chart
