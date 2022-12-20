@@ -175,5 +175,5 @@ def chatbot():
 chatbot() 
 
 
-# TO:DO --> display forecasts for selected stocks/bonds/crypto 
+# TO:DO --> display forecasts for selected stocks/bonds/crypto (stocks done) 
 #           display monte carlo simulations for each portfolio type 
