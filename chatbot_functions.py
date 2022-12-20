@@ -6,9 +6,7 @@ from streamlit_chat import message
 import streamlit as st
 import matplotlib.pyplot as plt
 import plotly.express as px
-import pandas as pd
-from math import pi 
-
+import pandas as pd 
 
 def verifyUserAge(age): 
     '''
@@ -22,14 +20,14 @@ def verifyUserAge(age):
     if age >= 18 and age <= 110:
 
         # Add a message to the chat widget indicating the user is over 18 years old
-        message("You are over 18 years old! Enjoy the use of our investment portfolio generator!", seed=21)
+        message("You are over 18 years old! Enjoy the use of our investment portfolio generator!", seed=21, key=23)
     
     elif age > 110: 
-        message("I'm sorry, but it looks like you are too old to use this application. Please enter an age less than 110!", seed=21)
+        message("I'm sorry, but it looks like you are too old to use this application. Please enter an age less than 110!", seed=21, key=24)
     
     else:
         # Add a message to the chat widget indicating the user is under 18 years old or the input is not a valid age
-        message("This application requires you to be at least 18 years old!", seed=21)
+        message("This application requires you to be at least 18 years old!", seed=21, key=25)
 
 portfolio_list = []
 weights_list = []
@@ -76,7 +74,7 @@ def allocate_portfolio(user_investment_amount):
     assets = ['Stocks', 'Bonds', 'Crypto']
     values = user_buying_power_allocation
     #df = pd.DataFrame({'Asset': assets, 'Value': values})
-    message(f'I recommend allocating your buying power towards each asset class in the following format: ', seed=21, key=10)
+    message(f'I recommend allocating your buying power towards each asset class in the following format: ', seed=21, key=26)
     
     st.table(pd.DataFrame({'Asset': assets, 'Value': values}))
     
@@ -158,3 +156,22 @@ def display_portfolio_allocation(portfolio_type):
 
         # Display the pie chart using st.plotly_chart
         st.plotly_chart(fig)
+
+def display_forecasts(user_input):
+    '''
+    This function will display the forecasts up to the next 30-days from our Prophet Models 
+    
+    Parameters: 
+
+    user_input --> pass in the user_input from streamlit to verify if the user enters "yes" or "no" 
+    '''
+
+    if user_input:  
+        if user_input.lower().strip() == 'yes' or user_input.lower().strip() == 'y': 
+            message("TO:DO -- DISPLAY FORECASTS FROM PROPHET MODELS", seed=21, key=32)
+    
+        elif user_input.lower().strip() == 'no' or user_input.lower().strip() == 'n': 
+            message("Thank you for using our investment portfolio generator!", seed=21, key=33)
+    
+        else: 
+            message("Please enter either 'yes' or 'no'", seed=21, key=34)
