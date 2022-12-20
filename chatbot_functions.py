@@ -77,8 +77,6 @@ def allocate_portfolio(user_investment_amount):
     message(f'I recommend allocating your buying power towards each asset class in the following format: ', seed=21, key=26)
     
     st.table(pd.DataFrame({'Asset': assets, 'Value': values}))
-    
-    #message(f'(Stocks/Bonds/Crypto) -- {user_buying_power_allocation}', seed=21, key=11)
 
 def display_portfolio_allocation(portfolio_type): 
     '''

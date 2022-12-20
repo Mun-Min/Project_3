@@ -175,10 +175,5 @@ def chatbot():
 chatbot() 
 
 
-# TO:DO --> grab user's investment amount, 
-#           calculate weighted portfolio based off of 110 rule, 
-#           display assets based off of user's chosen risk tolerance,
-#           display dataframe of forecasts (Prophet Forecasts -- Short Term/Long Term ??) for chosen assets or display Monte Carlo Simulations
-#           (in project requirments it says one or more machine learning models used, so we do not need to include LR Models or Decision Tree Models)
-#           Should we update the portfolio weights to where they are specific to each portfolio type?
-#               - Currently the 110 rule is being applied on each portfolio type
+# TO:DO --> display forecasts for selected stocks/bonds/crypto 
+#           display monte carlo simulations for each portfolio type 
