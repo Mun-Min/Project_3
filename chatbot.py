@@ -88,7 +88,7 @@ def chatbot():
                                     message(user_input, is_user=True, seed=1, key=31)
 
                                     # display prophet model forecasts
-                                    display_forecasts(user_input)
+                                    display_forecasts(user_input, portfolio_type)
                                 
                                 if str(portfolio_type).lower().strip() == 'low risk portfolio': 
 
@@ -125,7 +125,7 @@ def chatbot():
                                     message(user_input, is_user=True, seed=1, key=36)
 
                                     # display prophet model forecasts
-                                    display_forecasts(user_input)
+                                    display_forecasts(user_input, portfolio_type)
 
                                 if str(portfolio_type).lower().strip() == 'moderate risk portfolio': 
 
@@ -161,7 +161,7 @@ def chatbot():
                                     message(user_input, is_user=True, seed=1, key=38)
 
                                     # display prophet model forecasts
-                                    display_forecasts(user_input)
+                                    display_forecasts(user_input, portfolio_type)
 
                             else: 
                                 message("I'm sorry, but it looks like you entered an invalid portfolio type. Please enter a valid portfolio type!", seed=21, key=20)
