@@ -175,5 +175,5 @@ def chatbot():
 chatbot() 
 
 
-# TO:DO --> display forecasts for selected stocks/bonds/crypto (stocks done) 
-#           display monte carlo simulations for each portfolio type 
+# TO:DO --> display monte carlo simulations for each portfolio type 
+#           figure out a way to tune Prophet Model to produce more accurate results

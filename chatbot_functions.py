@@ -7,6 +7,7 @@ import streamlit as st
 import matplotlib.pyplot as plt
 import plotly.express as px
 import plotly.graph_objects as go
+import plotly.subplots as subplots
 import pandas as pd 
 import time 
 
@@ -164,6 +165,7 @@ def display_forecasts(user_input, portfolio_type):
     Parameters: 
 
     user_input --> pass in the user_input from streamlit to verify if the user enters "yes" or "no" 
+    portfolio_type --> pass in the portfolio_type the user chose to verify which forecasts to display
     '''
 
     if user_input:  
