@@ -282,10 +282,9 @@ def display_forecasts(user_input, portfolio_type):
                         st.stop()
 
         if user_input.lower().strip() == 'no' or user_input.lower().strip() == 'n': 
-            message("Thank you for using our investment portfolio generator!", seed=21, key=33)
-            #st.balloons() 
+            message("Instead, would you like to run a Monte Carlo Simulation on your selected portfolio?", seed=21, key=33)
     
-        else: 
+        else:
             message("Please enter either 'yes' or 'no'", seed=21, key=34)
 
 def run_MC_simulation(user_input_MC, portfolio_type): 
@@ -304,171 +303,208 @@ def run_MC_simulation(user_input_MC, portfolio_type):
             message("How many years would you like to invest for?", seed=21, key=41)
             investment_period = st.sidebar.text_input("Enter Investment Period: ")
             message(investment_period, is_user=True, seed=1, key=43)
-                                    
-            if investment_period.isnumeric(): 
-                AAPL = pd.read_csv(('./Data Collection Notebooks/asset_historical_prices/AAPL.csv'), index_col='Date', parse_dates=True, infer_datetime_format=True)
-                AAPL.rename(columns = {'Open':'open', 'High':'high', 'Low':'low', 'Close':'close', 'Adj Close':'adj close', 'Volume':'volume'}, inplace = True)
 
-                LLY = pd.read_csv(('./Data Collection Notebooks/asset_historical_prices/LLY.csv'), index_col='Date', parse_dates=True, infer_datetime_format=True)
-                LLY.rename(columns = {'Open':'open', 'High':'high', 'Low':'low', 'Close':'close', 'Adj Close':'adj close', 'Volume':'volume'}, inplace = True)
-                
-                JNJ = pd.read_csv(('./Data Collection Notebooks/asset_historical_prices/JNJ.csv'), index_col='Date', parse_dates=True, infer_datetime_format=True)
-                JNJ.rename(columns = {'Open':'open', 'High':'high', 'Low':'low', 'Close':'close', 'Adj Close':'adj close', 'Volume':'volume'}, inplace = True)
+            if investment_period:                         
+                if investment_period.isnumeric(): 
+                    AAPL = pd.read_csv(('./Data Collection Notebooks/asset_historical_prices/AAPL.csv'), index_col='Date', parse_dates=True, infer_datetime_format=True)
+                    AAPL.rename(columns = {'Open':'open', 'High':'high', 'Low':'low', 'Close':'close', 'Adj Close':'adj close', 'Volume':'volume'}, inplace = True)
 
-                BAC = pd.read_csv(('./Data Collection Notebooks/asset_historical_prices/BAC.csv'), index_col='Date', parse_dates=True, infer_datetime_format=True)
-                BAC.rename(columns = {'Open':'open', 'High':'high', 'Low':'low', 'Close':'close', 'Adj Close':'adj close', 'Volume':'volume'}, inplace = True)
-
-                BRK_B = pd.read_csv(('./Data Collection Notebooks/asset_historical_prices/BRK-B.csv'), index_col='Date', parse_dates=True, infer_datetime_format=True)
-                BRK_B.rename(columns = {'Open':'open', 'High':'high', 'Low':'low', 'Close':'close', 'Adj Close':'adj close', 'Volume':'volume'}, inplace = True)
-
-                V = pd.read_csv(('./Data Collection Notebooks/asset_historical_prices/V.csv'), index_col='Date', parse_dates=True, infer_datetime_format=True)
-                V.rename(columns = {'Open':'open', 'High':'high', 'Low':'low', 'Close':'close', 'Adj Close':'adj close', 'Volume':'volume'}, inplace = True)
-                
-                HD = pd.read_csv(('./Data Collection Notebooks/asset_historical_prices/HD.csv'), index_col='Date', parse_dates=True, infer_datetime_format=True)
-                HD.rename(columns = {'Open':'open', 'High':'high', 'Low':'low', 'Close':'close', 'Adj Close':'adj close', 'Volume':'volume'}, inplace = True)
-
-                MRK = pd.read_csv(('./Data Collection Notebooks/asset_historical_prices/MRK.csv'), index_col='Date', parse_dates=True, infer_datetime_format=True)
-                MRK.rename(columns = {'Open':'open', 'High':'high', 'Low':'low', 'Close':'close', 'Adj Close':'adj close', 'Volume':'volume'}, inplace = True)
-
-                PFE = pd.read_csv(('./Data Collection Notebooks/asset_historical_prices/PFE.csv'), index_col='Date', parse_dates=True, infer_datetime_format=True)
-                PFE.rename(columns = {'Open':'open', 'High':'high', 'Low':'low', 'Close':'close', 'Adj Close':'adj close', 'Volume':'volume'}, inplace = True)
-
-                ABBV = pd.read_csv(('./Data Collection Notebooks/asset_historical_prices/ABBV.csv'), index_col='Date', parse_dates=True, infer_datetime_format=True)
-                ABBV.rename(columns = {'Open':'open', 'High':'high', 'Low':'low', 'Close':'close', 'Adj Close':'adj close', 'Volume':'volume'}, inplace = True)
-
-                UNH = pd.read_csv(('./Data Collection Notebooks/asset_historical_prices/UNH.csv'), index_col='Date', parse_dates=True, infer_datetime_format=True)
-                UNH.rename(columns = {'Open':'open', 'High':'high', 'Low':'low', 'Close':'close', 'Adj Close':'adj close', 'Volume':'volume'}, inplace = True)
-                
-                MA = pd.read_csv(('./Data Collection Notebooks/asset_historical_prices/MA.csv'), index_col='Date', parse_dates=True, infer_datetime_format=True)
-                MA.rename(columns = {'Open':'open', 'High':'high', 'Low':'low', 'Close':'close', 'Adj Close':'adj close', 'Volume':'volume'}, inplace = True)
-
-                AMZN = pd.read_csv(('./Data Collection Notebooks/asset_historical_prices/AMZN.csv'), index_col='Date', parse_dates=True, infer_datetime_format=True)
-                AMZN.rename(columns = {'Open':'open', 'High':'high', 'Low':'low', 'Close':'close', 'Adj Close':'adj close', 'Volume':'volume'}, inplace = True)
-                
-                TSLA = pd.read_csv(('./Data Collection Notebooks/asset_historical_prices/TSLA.csv'), index_col='Date', parse_dates=True, infer_datetime_format=True)
-                TSLA.rename(columns = {'Open':'open', 'High':'high', 'Low':'low', 'Close':'close', 'Adj Close':'adj close', 'Volume':'volume'}, inplace = True)
-
-                NVDA = pd.read_csv(('./Data Collection Notebooks/asset_historical_prices/NVDA.csv'), index_col='Date', parse_dates=True, infer_datetime_format=True)
-                NVDA.rename(columns = {'Open':'open', 'High':'high', 'Low':'low', 'Close':'close', 'Adj Close':'adj close', 'Volume':'volume'}, inplace = True)
-
-                META = pd.read_csv(('./Data Collection Notebooks/asset_historical_prices/META.csv'), index_col='Date', parse_dates=True, infer_datetime_format=True)
-                META.rename(columns = {'Open':'open', 'High':'high', 'Low':'low', 'Close':'close', 'Adj Close':'adj close', 'Volume':'volume'}, inplace = True)
-
-                GOOGL = pd.read_csv(('./Data Collection Notebooks/asset_historical_prices/GOOGL.csv'), index_col='Date', parse_dates=True, infer_datetime_format=True)
-                GOOGL.rename(columns = {'Open':'open', 'High':'high', 'Low':'low', 'Close':'close', 'Adj Close':'adj close', 'Volume':'volume'}, inplace = True)
-
-                MSFT = pd.read_csv(('./Data Collection Notebooks/asset_historical_prices/MSFT.csv'), index_col='Date', parse_dates=True, infer_datetime_format=True)
-                MSFT.rename(columns = {'Open':'open', 'High':'high', 'Low':'low', 'Close':'close', 'Adj Close':'adj close', 'Volume':'volume'}, inplace = True)
-
-                JPM = pd.read_csv(('./Data Collection Notebooks/asset_historical_prices/JPM.csv'), index_col='Date', parse_dates=True, infer_datetime_format=True)
-                JPM.rename(columns = {'Open':'open', 'High':'high', 'Low':'low', 'Close':'close', 'Adj Close':'adj close', 'Volume':'volume'}, inplace = True)
-
-                KO = pd.read_csv(('./Data Collection Notebooks/asset_historical_prices/KO.csv'), index_col='Date', parse_dates=True, infer_datetime_format=True)
-                KO.rename(columns = {'Open':'open', 'High':'high', 'Low':'low', 'Close':'close', 'Adj Close':'adj close', 'Volume':'volume'}, inplace = True)
-
-                PG = pd.read_csv(('./Data Collection Notebooks/asset_historical_prices/PG.csv'), index_col='Date', parse_dates=True, infer_datetime_format=True)
-                PG.rename(columns = {'Open':'open', 'High':'high', 'Low':'low', 'Close':'close', 'Adj Close':'adj close', 'Volume':'volume'}, inplace = True)
-
-                PEP = pd.read_csv(('./Data Collection Notebooks/asset_historical_prices/PEP.csv'), index_col='Date', parse_dates=True, infer_datetime_format=True)
-                PEP.rename(columns = {'Open':'open', 'High':'high', 'Low':'low', 'Close':'close', 'Adj Close':'adj close', 'Volume':'volume'}, inplace = True)
-                
-                BTC = pd.read_csv(('./Data Collection Notebooks/asset_historical_prices/BTC-USD.csv'), index_col='Date', parse_dates=True, infer_datetime_format=True)
-                BTC.rename(columns = {'Open':'open', 'High':'high', 'Low':'low', 'Close':'close', 'Adj Close':'adj close', 'Volume':'volume'}, inplace = True)
-
-                ETH = pd.read_csv(('./Data Collection Notebooks/asset_historical_prices/ETH-USD.csv'), index_col='Date', parse_dates=True, infer_datetime_format=True)
-                ETH.rename(columns = {'Open':'open', 'High':'high', 'Low':'low', 'Close':'close', 'Adj Close':'adj close', 'Volume':'volume'}, inplace = True)
-
-                AGG = pd.read_csv(('./Data Collection Notebooks/bonds/AGG.csv'), index_col='Date', parse_dates=True, infer_datetime_format=True)
-                AGG.rename(columns = {'Open':'open', 'High':'high', 'Low':'low', 'Close':'close', 'Adj Close':'adj close', 'Volume':'volume'}, inplace = True)
-
-                if str(portfolio_type).lower().strip() == 'high risk portfolio':
-                    asset_df = pd.concat([TSLA, NVDA, LLY, AAPL, UNH, MA, ETH, AGG], axis=1, keys=['TSLA', 'NVDA', 'LLY', 'AAPL', 'MSFT', 'UNH', 'MA', 'ETH', 'AGG'])
-                    asset_df = asset_df.dropna()
-
-                    # Configuring a Monte Carlo simulation to forecast Y years of cumulative returns
-                    stock_weights = float(weights_list[0]) * 100
-                    bond_weights = float(weights_list[1]) * 100
-                    sim_returns = MCSimulation(
-                        portfolio_data = asset_df,
-                        weights = [(stock_weights/500), (stock_weights/500),(stock_weights/500),(stock_weights/500),(stock_weights/500),.025,.025,(bond_weights/100)],
-                        num_simulation=150,
-                        num_trading_days=252*int(investment_period)
-                    )
+                    LLY = pd.read_csv(('./Data Collection Notebooks/asset_historical_prices/LLY.csv'), index_col='Date', parse_dates=True, infer_datetime_format=True)
+                    LLY.rename(columns = {'Open':'open', 'High':'high', 'Low':'low', 'Close':'close', 'Adj Close':'adj close', 'Volume':'volume'}, inplace = True)
                     
-                    st.warning('WARNING: May take a few minutes to run!', icon="🚨")
-                    with st.spinner("Running Monte Carlo Simulation..."):
+                    JNJ = pd.read_csv(('./Data Collection Notebooks/asset_historical_prices/JNJ.csv'), index_col='Date', parse_dates=True, infer_datetime_format=True)
+                    JNJ.rename(columns = {'Open':'open', 'High':'high', 'Low':'low', 'Close':'close', 'Adj Close':'adj close', 'Volume':'volume'}, inplace = True)
 
-                        sim_returns.calc_cumulative_return() # Forecast cumulative returns
+                    BAC = pd.read_csv(('./Data Collection Notebooks/asset_historical_prices/BAC.csv'), index_col='Date', parse_dates=True, infer_datetime_format=True)
+                    BAC.rename(columns = {'Open':'open', 'High':'high', 'Low':'low', 'Close':'close', 'Adj Close':'adj close', 'Volume':'volume'}, inplace = True)
 
-                        plot = sim_returns.plot_simulation().figure # To depict an image with simulation outcomes
+                    BRK_B = pd.read_csv(('./Data Collection Notebooks/asset_historical_prices/BRK-B.csv'), index_col='Date', parse_dates=True, infer_datetime_format=True)
+                    BRK_B.rename(columns = {'Open':'open', 'High':'high', 'Low':'low', 'Close':'close', 'Adj Close':'adj close', 'Volume':'volume'}, inplace = True)
 
-                        # Add labels to the x-axis and y-axis
-                        plt.xlabel('Time (# of Trading Days)')
-                        plt.ylabel('Cumulative Return (%)')
+                    V = pd.read_csv(('./Data Collection Notebooks/asset_historical_prices/V.csv'), index_col='Date', parse_dates=True, infer_datetime_format=True)
+                    V.rename(columns = {'Open':'open', 'High':'high', 'Low':'low', 'Close':'close', 'Adj Close':'adj close', 'Volume':'volume'}, inplace = True)
+                    
+                    HD = pd.read_csv(('./Data Collection Notebooks/asset_historical_prices/HD.csv'), index_col='Date', parse_dates=True, infer_datetime_format=True)
+                    HD.rename(columns = {'Open':'open', 'High':'high', 'Low':'low', 'Close':'close', 'Adj Close':'adj close', 'Volume':'volume'}, inplace = True)
 
-                        time.sleep(5)
+                    MRK = pd.read_csv(('./Data Collection Notebooks/asset_historical_prices/MRK.csv'), index_col='Date', parse_dates=True, infer_datetime_format=True)
+                    MRK.rename(columns = {'Open':'open', 'High':'high', 'Low':'low', 'Close':'close', 'Adj Close':'adj close', 'Volume':'volume'}, inplace = True)
 
-                    st.write(plot) 
+                    PFE = pd.read_csv(('./Data Collection Notebooks/asset_historical_prices/PFE.csv'), index_col='Date', parse_dates=True, infer_datetime_format=True)
+                    PFE.rename(columns = {'Open':'open', 'High':'high', 'Low':'low', 'Close':'close', 'Adj Close':'adj close', 'Volume':'volume'}, inplace = True)
+
+                    ABBV = pd.read_csv(('./Data Collection Notebooks/asset_historical_prices/ABBV.csv'), index_col='Date', parse_dates=True, infer_datetime_format=True)
+                    ABBV.rename(columns = {'Open':'open', 'High':'high', 'Low':'low', 'Close':'close', 'Adj Close':'adj close', 'Volume':'volume'}, inplace = True)
+
+                    UNH = pd.read_csv(('./Data Collection Notebooks/asset_historical_prices/UNH.csv'), index_col='Date', parse_dates=True, infer_datetime_format=True)
+                    UNH.rename(columns = {'Open':'open', 'High':'high', 'Low':'low', 'Close':'close', 'Adj Close':'adj close', 'Volume':'volume'}, inplace = True)
+                    
+                    MA = pd.read_csv(('./Data Collection Notebooks/asset_historical_prices/MA.csv'), index_col='Date', parse_dates=True, infer_datetime_format=True)
+                    MA.rename(columns = {'Open':'open', 'High':'high', 'Low':'low', 'Close':'close', 'Adj Close':'adj close', 'Volume':'volume'}, inplace = True)
+
+                    AMZN = pd.read_csv(('./Data Collection Notebooks/asset_historical_prices/AMZN.csv'), index_col='Date', parse_dates=True, infer_datetime_format=True)
+                    AMZN.rename(columns = {'Open':'open', 'High':'high', 'Low':'low', 'Close':'close', 'Adj Close':'adj close', 'Volume':'volume'}, inplace = True)
+                    
+                    TSLA = pd.read_csv(('./Data Collection Notebooks/asset_historical_prices/TSLA.csv'), index_col='Date', parse_dates=True, infer_datetime_format=True)
+                    TSLA.rename(columns = {'Open':'open', 'High':'high', 'Low':'low', 'Close':'close', 'Adj Close':'adj close', 'Volume':'volume'}, inplace = True)
+
+                    NVDA = pd.read_csv(('./Data Collection Notebooks/asset_historical_prices/NVDA.csv'), index_col='Date', parse_dates=True, infer_datetime_format=True)
+                    NVDA.rename(columns = {'Open':'open', 'High':'high', 'Low':'low', 'Close':'close', 'Adj Close':'adj close', 'Volume':'volume'}, inplace = True)
+
+                    META = pd.read_csv(('./Data Collection Notebooks/asset_historical_prices/META.csv'), index_col='Date', parse_dates=True, infer_datetime_format=True)
+                    META.rename(columns = {'Open':'open', 'High':'high', 'Low':'low', 'Close':'close', 'Adj Close':'adj close', 'Volume':'volume'}, inplace = True)
+
+                    GOOGL = pd.read_csv(('./Data Collection Notebooks/asset_historical_prices/GOOGL.csv'), index_col='Date', parse_dates=True, infer_datetime_format=True)
+                    GOOGL.rename(columns = {'Open':'open', 'High':'high', 'Low':'low', 'Close':'close', 'Adj Close':'adj close', 'Volume':'volume'}, inplace = True)
+
+                    MSFT = pd.read_csv(('./Data Collection Notebooks/asset_historical_prices/MSFT.csv'), index_col='Date', parse_dates=True, infer_datetime_format=True)
+                    MSFT.rename(columns = {'Open':'open', 'High':'high', 'Low':'low', 'Close':'close', 'Adj Close':'adj close', 'Volume':'volume'}, inplace = True)
+
+                    JPM = pd.read_csv(('./Data Collection Notebooks/asset_historical_prices/JPM.csv'), index_col='Date', parse_dates=True, infer_datetime_format=True)
+                    JPM.rename(columns = {'Open':'open', 'High':'high', 'Low':'low', 'Close':'close', 'Adj Close':'adj close', 'Volume':'volume'}, inplace = True)
+
+                    KO = pd.read_csv(('./Data Collection Notebooks/asset_historical_prices/KO.csv'), index_col='Date', parse_dates=True, infer_datetime_format=True)
+                    KO.rename(columns = {'Open':'open', 'High':'high', 'Low':'low', 'Close':'close', 'Adj Close':'adj close', 'Volume':'volume'}, inplace = True)
+
+                    PG = pd.read_csv(('./Data Collection Notebooks/asset_historical_prices/PG.csv'), index_col='Date', parse_dates=True, infer_datetime_format=True)
+                    PG.rename(columns = {'Open':'open', 'High':'high', 'Low':'low', 'Close':'close', 'Adj Close':'adj close', 'Volume':'volume'}, inplace = True)
+
+                    PEP = pd.read_csv(('./Data Collection Notebooks/asset_historical_prices/PEP.csv'), index_col='Date', parse_dates=True, infer_datetime_format=True)
+                    PEP.rename(columns = {'Open':'open', 'High':'high', 'Low':'low', 'Close':'close', 'Adj Close':'adj close', 'Volume':'volume'}, inplace = True)
+                    
+                    BTC = pd.read_csv(('./Data Collection Notebooks/asset_historical_prices/BTC-USD.csv'), index_col='Date', parse_dates=True, infer_datetime_format=True)
+                    BTC.rename(columns = {'Open':'open', 'High':'high', 'Low':'low', 'Close':'close', 'Adj Close':'adj close', 'Volume':'volume'}, inplace = True)
+
+                    ETH = pd.read_csv(('./Data Collection Notebooks/asset_historical_prices/ETH-USD.csv'), index_col='Date', parse_dates=True, infer_datetime_format=True)
+                    ETH.rename(columns = {'Open':'open', 'High':'high', 'Low':'low', 'Close':'close', 'Adj Close':'adj close', 'Volume':'volume'}, inplace = True)
+
+                    AGG = pd.read_csv(('./Data Collection Notebooks/bonds/AGG.csv'), index_col='Date', parse_dates=True, infer_datetime_format=True)
+                    AGG.rename(columns = {'Open':'open', 'High':'high', 'Low':'low', 'Close':'close', 'Adj Close':'adj close', 'Volume':'volume'}, inplace = True)
+
+                    if str(portfolio_type).lower().strip() == 'high risk portfolio':
+                        asset_df = pd.concat([TSLA, NVDA, LLY, AAPL, UNH, MA, ETH, AGG], axis=1, keys=['TSLA', 'NVDA', 'LLY', 'AAPL', 'MSFT', 'UNH', 'MA', 'ETH', 'AGG'])
+                        asset_df = asset_df.dropna()
+
+                        # Configuring a Monte Carlo simulation to forecast Y years of cumulative returns
+                        stock_weights = float(weights_list[0]) * 100
+                        bond_weights = float(weights_list[1]) * 100
+                        sim_returns = MCSimulation(
+                            portfolio_data = asset_df,
+                            weights = [(stock_weights/500), (stock_weights/500),(stock_weights/500),(stock_weights/500),(stock_weights/500),.025,.025,(bond_weights/100)],
+                            num_simulation=150,
+                            num_trading_days=252*int(investment_period)
+                        )
+                        
+                        # Define the placeholder widget
+                        warning_placeholder = st.empty()
+
+                        # Display the warning message using the placeholder widget
+                        warning_placeholder.warning('WARNING: May take a few minutes to run!', icon="🚨")
+
+                        # Run the Monte Carlo simulation
+                        with st.spinner("Running Monte Carlo Simulation..."):
+                            sim_returns.calc_cumulative_return() # Forecast cumulative returns
+
+                            plot = sim_returns.plot_simulation().figure # To depict an image with simulation outcomes
+
+                            # Add labels to the x-axis and y-axis
+                            plt.xlabel('Time (# of Trading Days)')
+                            plt.ylabel('Cumulative Return (%)')
+
+                            time.sleep(5)
+
+                        # Remove the warning message from the placeholder widget
+                        warning_placeholder.empty()
+
+                        # Display the plot
+                        st.write(plot)
+
+                    
+                    if str(portfolio_type).lower().strip() == 'low risk portfolio':
+                        asset_df = pd.concat([PEP, PG, JNJ, KO, JPM, BAC, BRK_B, AGG], axis=1, keys=['PEP', 'PG', 'JNJ', 'KO', 'JPM', 'BAC', 'BRK-B', 'AGG'])
+                        asset_df = asset_df.dropna()
+
+                        # Configuring a Monte Carlo simulation to forecast Y years of cumulative returns
+                        stock_weights = float(weights_list[0]) * 100
+                        bond_weights = float(weights_list[1]) * 100
+                        sim_returns = MCSimulation(
+                            portfolio_data = asset_df,
+                            weights = [(stock_weights/500), (stock_weights/500),(stock_weights/500),(stock_weights/500),(stock_weights/500),.025,.025,(bond_weights/100)],
+                            num_simulation=150,
+                            num_trading_days=252*int(investment_period)
+                        )
+
+                        # Define the placeholder widget
+                        warning_placeholder = st.empty()
+
+                        # Display the warning message using the placeholder widget
+                        warning_placeholder.warning('WARNING: May take a few minutes to run!', icon="🚨")
+
+                        # Run the Monte Carlo simulation
+                        with st.spinner("Running Monte Carlo Simulation..."):
+                            sim_returns.calc_cumulative_return() # Forecast cumulative returns
+
+                            plot = sim_returns.plot_simulation().figure # To depict an image with simulation outcomes
+
+                            # Add labels to the x-axis and y-axis
+                            plt.xlabel('Time (# of Trading Days)')
+                            plt.ylabel('Cumulative Return (%)')
+
+                            time.sleep(5)
+
+                        # Remove the warning message from the placeholder widget
+                        warning_placeholder.empty()
+
+                        # Display the plot
+                        st.write(plot)
+ 
+
+                    if str(portfolio_type).lower().strip() == 'moderate risk portfolio':
+                        asset_df = pd.concat([MRK, V, HD, PFE, ABBV, AGG, AMZN, BTC], axis=1, keys=['MRK', 'V', 'HD', 'PFE', 'ABBV', 'AGG', 'AMZN', 'BTC'])
+                        asset_df = asset_df.dropna()
+
+                        # Configuring a Monte Carlo simulation to forecast Y years of cumulative returns
+                        stock_weights = float(weights_list[0]) * 100
+                        bond_weights = float(weights_list[1]) * 100
+                        sim_returns = MCSimulation(
+                            portfolio_data = asset_df,
+                            weights = [(stock_weights/500), (stock_weights/500),(stock_weights/500),(stock_weights/500),(stock_weights/500),.025,.025,(bond_weights/100)],
+                            num_simulation=150,
+                            num_trading_days=252*int(investment_period)
+                        )
+
+                        # Define the placeholder widget
+                        warning_placeholder = st.empty()
+
+                        # Display the warning message using the placeholder widget
+                        warning_placeholder.warning('WARNING: May take a few minutes to run!', icon="🚨")
+
+                        # Run the Monte Carlo simulation
+                        with st.spinner("Running Monte Carlo Simulation..."):
+                            sim_returns.calc_cumulative_return() # Forecast cumulative returns
+
+                            plot = sim_returns.plot_simulation().figure # To depict an image with simulation outcomes
+
+                            # Add labels to the x-axis and y-axis
+                            plt.xlabel('Time (# of Trading Days)')
+                            plt.ylabel('Cumulative Return (%)')
+
+                            time.sleep(5)
+
+                        # Remove the warning message from the placeholder widget
+                        warning_placeholder.empty()
+
+                        # Display the plot
+                        st.write(plot)
+
+
+                if investment_period.isnumeric() == False: 
+                    message("Please enter a valid number!", seed=21, key=51)
                 
-                if str(portfolio_type).lower().strip() == 'low risk portfolio':
-                    asset_df = pd.concat([PEP, PG, JNJ, KO, JPM, BAC, BRK_B, AGG], axis=1, keys=['PEP', 'PG', 'JNJ', 'KO', 'JPM', 'BAC', 'BRK-B', 'AGG'])
-                    asset_df = asset_df.dropna()
-
-                    # Configuring a Monte Carlo simulation to forecast Y years of cumulative returns
-                    stock_weights = float(weights_list[0]) * 100
-                    bond_weights = float(weights_list[1]) * 100
-                    sim_returns = MCSimulation(
-                        portfolio_data = asset_df,
-                        weights = [(stock_weights/500), (stock_weights/500),(stock_weights/500),(stock_weights/500),(stock_weights/500),.025,.025,(bond_weights/100)],
-                        num_simulation=150,
-                        num_trading_days=252*int(investment_period)
-                    )
-
-                    st.warning('WARNING: May take a few minutes to run!', icon="🚨")
-                    with st.spinner("Running Monte Carlo Simulation..."):
-
-                        sim_returns.calc_cumulative_return() # Forecast cumulative returns
-
-                        plot = sim_returns.plot_simulation().figure # To depict an image with simulation outcomes
-
-                        # Add labels to the x-axis and y-axis
-                        plt.xlabel('Time (# of Trading Days)')
-                        plt.ylabel('Cumulative Return (%)')
-
-                        time.sleep(5)
-
-                    st.write(plot) 
-                
-                if str(portfolio_type).lower().strip() == 'moderate risk portfolio':
-                    asset_df = pd.concat([MRK, V, HD, PFE, ABBV, AGG, AMZN, BTC], axis=1, keys=['MRK', 'V', 'HD', 'PFE', 'ABBV', 'AGG', 'AMZN', 'BTC'])
-                    asset_df = asset_df.dropna()
-
-                    # Configuring a Monte Carlo simulation to forecast Y years of cumulative returns
-                    stock_weights = float(weights_list[0]) * 100
-                    bond_weights = float(weights_list[1]) * 100
-                    sim_returns = MCSimulation(
-                        portfolio_data = asset_df,
-                        weights = [(stock_weights/500), (stock_weights/500),(stock_weights/500),(stock_weights/500),(stock_weights/500),.025,.025,(bond_weights/100)],
-                        num_simulation=150,
-                        num_trading_days=252*int(investment_period)
-                    )
-
-                    st.warning('WARNING: May take a few minutes to run!', icon="🚨")
-                    with st.spinner("Running Monte Carlo Simulation..."):
-
-                        sim_returns.calc_cumulative_return() # Forecast cumulative returns
-
-                        plot = sim_returns.plot_simulation().figure # To depict an image with simulation outcomes
-
-                        # Add labels to the x-axis and y-axis
-                        plt.xlabel('Time (# of Trading Days)')
-                        plt.ylabel('Cumulative Return (%)')
-
-                        time.sleep(5)
-
-                    st.write(plot)  
-
-
-        if user_input_MC.lower().strip() == 'no' or user_input_MC.lower().strip() == 'n': 
+        elif user_input_MC.lower().strip() == 'no' or user_input_MC.lower().strip() == 'n': 
             message("Thank you for using our investment portfolio generator!", seed=21, key=45)
             st.balloons() 
+            st.stop() 
+        
+        else: 
+            message("Please enter either 'yes' or 'no'", seed=21, key=47)

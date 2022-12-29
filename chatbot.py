@@ -93,7 +93,6 @@ def chatbot():
 
                                     # run MC simulation
                                     if user_input.lower().strip() == 'no' or user_input.lower().strip() == 'n': 
-                                        message("Before you leave, would you like to run a Monte Carlo Simulation on your selected portfolio?", seed=21, key=42)
                                         st.warning('Monte Carlo Simulation, also known as the Monte Carlo Method or a multiple probability simulation, is a mathematical technique, which is used to estimate the possible outcomes of an uncertain event, in this case projecting cumulative returns for a selected portfolio!', icon="💡") 
                                         user_input_MC = st.sidebar.text_input("Run Monte Carlo Simulation? (yes/no): ")
                                         message(user_input_MC, is_user=True, seed=1, key=46)
@@ -135,7 +134,6 @@ def chatbot():
 
                                     # run MC simulation
                                     if user_input.lower().strip() == 'no' or user_input.lower().strip() == 'n': 
-                                        message("Before you leave, would you like to run a Monte Carlo Simulation on your selected portfolio?", seed=21, key=47)
                                         st.warning('Monte Carlo Simulation, also known as the Monte Carlo Method or a multiple probability simulation, is a mathematical technique, which is used to estimate the possible outcomes of an uncertain event, in this case projecting cumulative returns for a selected portfolio!', icon="💡") 
                                         user_input_MC = st.sidebar.text_input("Run Monte Carlo Simulation? (yes/no): ")
                                         message(user_input_MC, is_user=True, seed=1, key=48)
@@ -175,7 +173,6 @@ def chatbot():
 
                                     # run MC simulation
                                     if user_input.lower().strip() == 'no' or user_input.lower().strip() == 'n': 
-                                        message("Before you leave, would you like to run a Monte Carlo Simulation on your selected portfolio?", seed=21, key=49)
                                         st.warning('Monte Carlo Simulation, also known as the Monte Carlo Method or a multiple probability simulation, is a mathematical technique, which is used to estimate the possible outcomes of an uncertain event, in this case projecting cumulative returns for a selected portfolio!', icon="💡") 
                                         user_input_MC = st.sidebar.text_input("Run Monte Carlo Simulation? (yes/no): ")
                                         message(user_input_MC, is_user=True, seed=1, key=50)
