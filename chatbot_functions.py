@@ -7,9 +7,10 @@ import streamlit as st
 import matplotlib.pyplot as plt
 import plotly.express as px
 import plotly.graph_objects as go
-import plotly.subplots as subplots
 import pandas as pd 
 import time 
+from pathlib import Path
+from MCForecastTools import MCSimulation
 
 def verifyUserAge(age): 
     '''
@@ -36,7 +37,6 @@ portfolio_list = []
 weights_list = []
 user_buying_power_allocation = []
 
-#@st.cache(max_entries=1, allow_output_mutation=True) 
 def determine_weights(age): 
     '''
     This function calculates the weights for the chosen portfolio based off of the 
@@ -49,14 +49,16 @@ def determine_weights(age):
     weights_list.clear()
 
     user_stock_weights = 110 - age
-    user_bonds_crypto_weights = (100 - user_stock_weights) / 2
+    user_bonds_weights = (100 - user_stock_weights) - 5
+    user_crypto_weights = 5
 
-    user_bonds_crypto_weights = user_bonds_crypto_weights / 100
     user_stock_weights = user_stock_weights / 100
-    
+    user_bonds_weights = user_bonds_weights / 100
+    user_crypto_weights = user_crypto_weights / 100
+
     weights_list.append(user_stock_weights)
-    weights_list.append(user_bonds_crypto_weights)
-    weights_list.append(user_bonds_crypto_weights)
+    weights_list.append(user_bonds_weights)
+    weights_list.append(user_crypto_weights)
     
 def allocate_portfolio(user_investment_amount): 
     '''
@@ -165,7 +167,7 @@ def display_forecasts(user_input, portfolio_type):
     Parameters: 
 
     user_input --> pass in the user_input from streamlit to verify if the user enters "yes" or "no" 
-    portfolio_type --> pass in the portfolio_type the user chose to verify which forecasts to display
+    portfolio_type --> pass in the portfolio_type from streamlit to generate results towards each portfolio_type
     '''
 
     if user_input:  
@@ -177,12 +179,14 @@ def display_forecasts(user_input, portfolio_type):
                 time.sleep(0.5)
 
                 if str(portfolio_type).lower().strip() == 'high risk portfolio': 
-                    #portfolio_list = ['TSLA', 'NVDA', '10-yr Treasury Yield', 'ETH']
-
                     # Create a list of dataframes and names for the charts
                     df_list = [
                                 (pd.read_csv('./Data Collection Notebooks/top25_SP500_forecasts/TSLA_forecast.csv'), 'TSLA'),
-                                (pd.read_csv('./Data Collection Notebooks/top25_SP500_forecasts/NVDA_forecast.csv'), 'NVDA'),
+                                (pd.read_csv('./Data Collection Notebooks/top25_SP500_forecasts/NVDA_forecast.csv'), 'NVDA'),     
+                                (pd.read_csv('./Data Collection Notebooks/top25_SP500_forecasts/LLY_forecast.csv'), 'LLY'),
+                                (pd.read_csv('./Data Collection Notebooks/top25_SP500_forecasts/AAPL_forecast.csv'), 'AAPL'),
+                                (pd.read_csv('./Data Collection Notebooks/top25_SP500_forecasts/UNH_forecast.csv'), 'UNH'),
+                                (pd.read_csv('./Data Collection Notebooks/top25_SP500_forecasts/MA_forecast.csv'), 'MA'),
                                 (pd.read_csv('./Data Collection Notebooks/bond_forecasts/10-yr Treasury Yield_forecast.csv'), '10-yr Treasury Yield'),
                                 (pd.read_csv('./Data Collection Notebooks/crypto_forecasts/ETH-USD_forecast.csv'), 'ETH-USD')
                             ]
@@ -208,24 +212,16 @@ def display_forecasts(user_input, portfolio_type):
                         st.plotly_chart(trace_historical_prices, theme="streamlit", use_container_width=True)
                         st.stop()
 
-                if str(portfolio_type).lower().strip() == 'low risk portfolio': 
-                    #portfolio_list = ['PEP', 'PG', 'KO', 'JNJ', 'BRK-B', 'MRK', 'PFE', 
-                    #                  'XOM', 'CVX','JPM', 'HD', 'V', '30-yr Treasury Yield', 'BTC']
-                    
+                if str(portfolio_type).lower().strip() == 'low risk portfolio':                     
                     # Create a list of dataframes and names for the charts
                     df_list = [
                                 (pd.read_csv('./Data Collection Notebooks/top25_SP500_forecasts/PEP_forecast.csv'), 'PEP'),
                                 (pd.read_csv('./Data Collection Notebooks/top25_SP500_forecasts/PG_forecast.csv'), 'PG'),
-                                (pd.read_csv('./Data Collection Notebooks/top25_SP500_forecasts/KO_forecast.csv'), 'KO'),
                                 (pd.read_csv('./Data Collection Notebooks/top25_SP500_forecasts/JNJ_forecast.csv'), 'JNJ'),
-                                (pd.read_csv('./Data Collection Notebooks/top25_SP500_forecasts/BRK-B_forecast.csv'), 'BRK-B'),
-                                (pd.read_csv('./Data Collection Notebooks/top25_SP500_forecasts/MRK_forecast.csv'), 'MRK'),
-                                (pd.read_csv('./Data Collection Notebooks/top25_SP500_forecasts/PFE_forecast.csv'), 'PFE'),
-                                (pd.read_csv('./Data Collection Notebooks/top25_SP500_forecasts/XOM_forecast.csv'), 'XOM'),
-                                (pd.read_csv('./Data Collection Notebooks/top25_SP500_forecasts/CVX_forecast.csv'), 'CVX'),
+                                (pd.read_csv('./Data Collection Notebooks/top25_SP500_forecasts/KO_forecast.csv'), 'KO'),
                                 (pd.read_csv('./Data Collection Notebooks/top25_SP500_forecasts/JPM_forecast.csv'), 'JPM'),
-                                (pd.read_csv('./Data Collection Notebooks/top25_SP500_forecasts/HD_forecast.csv'), 'HD'),
-                                (pd.read_csv('./Data Collection Notebooks/top25_SP500_forecasts/V_forecast.csv'), 'V'),
+                                (pd.read_csv('./Data Collection Notebooks/top25_SP500_forecasts/BAC_forecast.csv'), 'BAC'),
+                                (pd.read_csv('./Data Collection Notebooks/top25_SP500_forecasts/BRK-B_forecast.csv'), 'BRK-B'),
                                 (pd.read_csv('./Data Collection Notebooks/bond_forecasts/30-yr Treasury Yield_forecast.csv'), '30-yr Treasury Yield'),
                                 (pd.read_csv('./Data Collection Notebooks/crypto_forecasts/BTC-USD_forecast.csv'), 'BTC-USD')
                             ]
@@ -252,22 +248,14 @@ def display_forecasts(user_input, portfolio_type):
                         st.stop()
 
                 if str(portfolio_type).lower().strip() == 'moderate risk portfolio':
-                    #portfolio_list = ['UNH', 'MSFT', 'LLY', 'MA', 'GOOG', 'GOOGL', 'ABBV', 
-                    #                  'BAC', 'AAPL','AMZN', 'META', '30yr Treasury Yield', 'BTC']
-
                     # Create a list of dataframes and names for the charts
                     df_list = [
-                                (pd.read_csv('./Data Collection Notebooks/top25_SP500_forecasts/UNH_forecast.csv'), 'UNH'),
-                                (pd.read_csv('./Data Collection Notebooks/top25_SP500_forecasts/MSFT_forecast.csv'), 'MSFT'),
-                                (pd.read_csv('./Data Collection Notebooks/top25_SP500_forecasts/LLY_forecast.csv'), 'LLY'),
-                                (pd.read_csv('./Data Collection Notebooks/top25_SP500_forecasts/MA_forecast.csv'), 'MA'),
-                                (pd.read_csv('./Data Collection Notebooks/top25_SP500_forecasts/GOOG_forecast.csv'), 'GOOG'),
-                                (pd.read_csv('./Data Collection Notebooks/top25_SP500_forecasts/GOOGL_forecast.csv'), 'GOOGL'),
+                                (pd.read_csv('./Data Collection Notebooks/top25_SP500_forecasts/MRK_forecast.csv'), 'MRK'),
+                                (pd.read_csv('./Data Collection Notebooks/top25_SP500_forecasts/V_forecast.csv'), 'V'),
+                                (pd.read_csv('./Data Collection Notebooks/top25_SP500_forecasts/HD_forecast.csv'), 'HD'),
+                                (pd.read_csv('./Data Collection Notebooks/top25_SP500_forecasts/PFE_forecast.csv'), 'PFE'),
                                 (pd.read_csv('./Data Collection Notebooks/top25_SP500_forecasts/ABBV_forecast.csv'), 'ABBV'),
-                                (pd.read_csv('./Data Collection Notebooks/top25_SP500_forecasts/BAC_forecast.csv'), 'BAC'),
-                                (pd.read_csv('./Data Collection Notebooks/top25_SP500_forecasts/AAPL_forecast.csv'), 'AAPL'),
                                 (pd.read_csv('./Data Collection Notebooks/top25_SP500_forecasts/AMZN_forecast.csv'), 'AMZN'),
-                                (pd.read_csv('./Data Collection Notebooks/top25_SP500_forecasts/META_forecast.csv'), 'META'),
                                 (pd.read_csv('./Data Collection Notebooks/bond_forecasts/30-yr Treasury Yield_forecast.csv'), '30-yr Treasury Yield'),
                                 (pd.read_csv('./Data Collection Notebooks/crypto_forecasts/BTC-USD_forecast.csv'), 'BTC-USD')
                             ]
@@ -295,7 +283,192 @@ def display_forecasts(user_input, portfolio_type):
 
         if user_input.lower().strip() == 'no' or user_input.lower().strip() == 'n': 
             message("Thank you for using our investment portfolio generator!", seed=21, key=33)
-            st.balloons() 
+            #st.balloons() 
     
         else: 
             message("Please enter either 'yes' or 'no'", seed=21, key=34)
+
+def run_MC_simulation(user_input_MC, portfolio_type): 
+    '''
+    This function will run the MC Simulation in the background to generate long-term portfolio results
+    
+    Parameters: 
+
+    user_input_MC --> pass in the user_input_MC from streamlit to verify if the user enters "yes" or "no" 
+    portfolio_type --> pass in the portfolio_type from streamlit to generate results towards each portfolio_type
+    '''
+
+    if user_input_MC:  
+
+        if user_input_MC.lower().strip() == 'yes' or user_input_MC.lower().strip() == 'y': 
+            message("How many years would you like to invest for?", seed=21, key=41)
+            investment_period = st.sidebar.text_input("Enter Investment Period: ")
+            message(investment_period, is_user=True, seed=1, key=43)
+                                    
+            if investment_period.isnumeric(): 
+                AAPL = pd.read_csv(('./Data Collection Notebooks/asset_historical_prices/AAPL.csv'), index_col='Date', parse_dates=True, infer_datetime_format=True)
+                AAPL.rename(columns = {'Open':'open', 'High':'high', 'Low':'low', 'Close':'close', 'Adj Close':'adj close', 'Volume':'volume'}, inplace = True)
+
+                LLY = pd.read_csv(('./Data Collection Notebooks/asset_historical_prices/LLY.csv'), index_col='Date', parse_dates=True, infer_datetime_format=True)
+                LLY.rename(columns = {'Open':'open', 'High':'high', 'Low':'low', 'Close':'close', 'Adj Close':'adj close', 'Volume':'volume'}, inplace = True)
+                
+                JNJ = pd.read_csv(('./Data Collection Notebooks/asset_historical_prices/JNJ.csv'), index_col='Date', parse_dates=True, infer_datetime_format=True)
+                JNJ.rename(columns = {'Open':'open', 'High':'high', 'Low':'low', 'Close':'close', 'Adj Close':'adj close', 'Volume':'volume'}, inplace = True)
+
+                BAC = pd.read_csv(('./Data Collection Notebooks/asset_historical_prices/BAC.csv'), index_col='Date', parse_dates=True, infer_datetime_format=True)
+                BAC.rename(columns = {'Open':'open', 'High':'high', 'Low':'low', 'Close':'close', 'Adj Close':'adj close', 'Volume':'volume'}, inplace = True)
+
+                BRK_B = pd.read_csv(('./Data Collection Notebooks/asset_historical_prices/BRK-B.csv'), index_col='Date', parse_dates=True, infer_datetime_format=True)
+                BRK_B.rename(columns = {'Open':'open', 'High':'high', 'Low':'low', 'Close':'close', 'Adj Close':'adj close', 'Volume':'volume'}, inplace = True)
+
+                V = pd.read_csv(('./Data Collection Notebooks/asset_historical_prices/V.csv'), index_col='Date', parse_dates=True, infer_datetime_format=True)
+                V.rename(columns = {'Open':'open', 'High':'high', 'Low':'low', 'Close':'close', 'Adj Close':'adj close', 'Volume':'volume'}, inplace = True)
+                
+                HD = pd.read_csv(('./Data Collection Notebooks/asset_historical_prices/HD.csv'), index_col='Date', parse_dates=True, infer_datetime_format=True)
+                HD.rename(columns = {'Open':'open', 'High':'high', 'Low':'low', 'Close':'close', 'Adj Close':'adj close', 'Volume':'volume'}, inplace = True)
+
+                MRK = pd.read_csv(('./Data Collection Notebooks/asset_historical_prices/MRK.csv'), index_col='Date', parse_dates=True, infer_datetime_format=True)
+                MRK.rename(columns = {'Open':'open', 'High':'high', 'Low':'low', 'Close':'close', 'Adj Close':'adj close', 'Volume':'volume'}, inplace = True)
+
+                PFE = pd.read_csv(('./Data Collection Notebooks/asset_historical_prices/PFE.csv'), index_col='Date', parse_dates=True, infer_datetime_format=True)
+                PFE.rename(columns = {'Open':'open', 'High':'high', 'Low':'low', 'Close':'close', 'Adj Close':'adj close', 'Volume':'volume'}, inplace = True)
+
+                ABBV = pd.read_csv(('./Data Collection Notebooks/asset_historical_prices/ABBV.csv'), index_col='Date', parse_dates=True, infer_datetime_format=True)
+                ABBV.rename(columns = {'Open':'open', 'High':'high', 'Low':'low', 'Close':'close', 'Adj Close':'adj close', 'Volume':'volume'}, inplace = True)
+
+                UNH = pd.read_csv(('./Data Collection Notebooks/asset_historical_prices/UNH.csv'), index_col='Date', parse_dates=True, infer_datetime_format=True)
+                UNH.rename(columns = {'Open':'open', 'High':'high', 'Low':'low', 'Close':'close', 'Adj Close':'adj close', 'Volume':'volume'}, inplace = True)
+                
+                MA = pd.read_csv(('./Data Collection Notebooks/asset_historical_prices/MA.csv'), index_col='Date', parse_dates=True, infer_datetime_format=True)
+                MA.rename(columns = {'Open':'open', 'High':'high', 'Low':'low', 'Close':'close', 'Adj Close':'adj close', 'Volume':'volume'}, inplace = True)
+
+                AMZN = pd.read_csv(('./Data Collection Notebooks/asset_historical_prices/AMZN.csv'), index_col='Date', parse_dates=True, infer_datetime_format=True)
+                AMZN.rename(columns = {'Open':'open', 'High':'high', 'Low':'low', 'Close':'close', 'Adj Close':'adj close', 'Volume':'volume'}, inplace = True)
+                
+                TSLA = pd.read_csv(('./Data Collection Notebooks/asset_historical_prices/TSLA.csv'), index_col='Date', parse_dates=True, infer_datetime_format=True)
+                TSLA.rename(columns = {'Open':'open', 'High':'high', 'Low':'low', 'Close':'close', 'Adj Close':'adj close', 'Volume':'volume'}, inplace = True)
+
+                NVDA = pd.read_csv(('./Data Collection Notebooks/asset_historical_prices/NVDA.csv'), index_col='Date', parse_dates=True, infer_datetime_format=True)
+                NVDA.rename(columns = {'Open':'open', 'High':'high', 'Low':'low', 'Close':'close', 'Adj Close':'adj close', 'Volume':'volume'}, inplace = True)
+
+                META = pd.read_csv(('./Data Collection Notebooks/asset_historical_prices/META.csv'), index_col='Date', parse_dates=True, infer_datetime_format=True)
+                META.rename(columns = {'Open':'open', 'High':'high', 'Low':'low', 'Close':'close', 'Adj Close':'adj close', 'Volume':'volume'}, inplace = True)
+
+                GOOGL = pd.read_csv(('./Data Collection Notebooks/asset_historical_prices/GOOGL.csv'), index_col='Date', parse_dates=True, infer_datetime_format=True)
+                GOOGL.rename(columns = {'Open':'open', 'High':'high', 'Low':'low', 'Close':'close', 'Adj Close':'adj close', 'Volume':'volume'}, inplace = True)
+
+                MSFT = pd.read_csv(('./Data Collection Notebooks/asset_historical_prices/MSFT.csv'), index_col='Date', parse_dates=True, infer_datetime_format=True)
+                MSFT.rename(columns = {'Open':'open', 'High':'high', 'Low':'low', 'Close':'close', 'Adj Close':'adj close', 'Volume':'volume'}, inplace = True)
+
+                JPM = pd.read_csv(('./Data Collection Notebooks/asset_historical_prices/JPM.csv'), index_col='Date', parse_dates=True, infer_datetime_format=True)
+                JPM.rename(columns = {'Open':'open', 'High':'high', 'Low':'low', 'Close':'close', 'Adj Close':'adj close', 'Volume':'volume'}, inplace = True)
+
+                KO = pd.read_csv(('./Data Collection Notebooks/asset_historical_prices/KO.csv'), index_col='Date', parse_dates=True, infer_datetime_format=True)
+                KO.rename(columns = {'Open':'open', 'High':'high', 'Low':'low', 'Close':'close', 'Adj Close':'adj close', 'Volume':'volume'}, inplace = True)
+
+                PG = pd.read_csv(('./Data Collection Notebooks/asset_historical_prices/PG.csv'), index_col='Date', parse_dates=True, infer_datetime_format=True)
+                PG.rename(columns = {'Open':'open', 'High':'high', 'Low':'low', 'Close':'close', 'Adj Close':'adj close', 'Volume':'volume'}, inplace = True)
+
+                PEP = pd.read_csv(('./Data Collection Notebooks/asset_historical_prices/PEP.csv'), index_col='Date', parse_dates=True, infer_datetime_format=True)
+                PEP.rename(columns = {'Open':'open', 'High':'high', 'Low':'low', 'Close':'close', 'Adj Close':'adj close', 'Volume':'volume'}, inplace = True)
+                
+                BTC = pd.read_csv(('./Data Collection Notebooks/asset_historical_prices/BTC-USD.csv'), index_col='Date', parse_dates=True, infer_datetime_format=True)
+                BTC.rename(columns = {'Open':'open', 'High':'high', 'Low':'low', 'Close':'close', 'Adj Close':'adj close', 'Volume':'volume'}, inplace = True)
+
+                ETH = pd.read_csv(('./Data Collection Notebooks/asset_historical_prices/ETH-USD.csv'), index_col='Date', parse_dates=True, infer_datetime_format=True)
+                ETH.rename(columns = {'Open':'open', 'High':'high', 'Low':'low', 'Close':'close', 'Adj Close':'adj close', 'Volume':'volume'}, inplace = True)
+
+                AGG = pd.read_csv(('./Data Collection Notebooks/bonds/AGG.csv'), index_col='Date', parse_dates=True, infer_datetime_format=True)
+                AGG.rename(columns = {'Open':'open', 'High':'high', 'Low':'low', 'Close':'close', 'Adj Close':'adj close', 'Volume':'volume'}, inplace = True)
+
+                if str(portfolio_type).lower().strip() == 'high risk portfolio':
+                    asset_df = pd.concat([TSLA, NVDA, LLY, AAPL, UNH, MA, ETH, AGG], axis=1, keys=['TSLA', 'NVDA', 'LLY', 'AAPL', 'MSFT', 'UNH', 'MA', 'ETH', 'AGG'])
+                    asset_df = asset_df.dropna()
+
+                    # Configuring a Monte Carlo simulation to forecast Y years of cumulative returns
+                    stock_weights = float(weights_list[0]) * 100
+                    bond_weights = float(weights_list[1]) * 100
+                    sim_returns = MCSimulation(
+                        portfolio_data = asset_df,
+                        weights = [(stock_weights/500), (stock_weights/500),(stock_weights/500),(stock_weights/500),(stock_weights/500),.025,.025,(bond_weights/100)],
+                        num_simulation=150,
+                        num_trading_days=252*int(investment_period)
+                    )
+                    
+                    st.warning('WARNING: May take a few minutes to run!', icon="🚨")
+                    with st.spinner("Running Monte Carlo Simulation..."):
+
+                        sim_returns.calc_cumulative_return() # Forecast cumulative returns
+
+                        plot = sim_returns.plot_simulation().figure # To depict an image with simulation outcomes
+
+                        # Add labels to the x-axis and y-axis
+                        plt.xlabel('Time (# of Trading Days)')
+                        plt.ylabel('Cumulative Return (%)')
+
+                        time.sleep(5)
+
+                    st.write(plot) 
+                
+                if str(portfolio_type).lower().strip() == 'low risk portfolio':
+                    asset_df = pd.concat([PEP, PG, JNJ, KO, JPM, BAC, BRK_B, AGG], axis=1, keys=['PEP', 'PG', 'JNJ', 'KO', 'JPM', 'BAC', 'BRK-B', 'AGG'])
+                    asset_df = asset_df.dropna()
+
+                    # Configuring a Monte Carlo simulation to forecast Y years of cumulative returns
+                    stock_weights = float(weights_list[0]) * 100
+                    bond_weights = float(weights_list[1]) * 100
+                    sim_returns = MCSimulation(
+                        portfolio_data = asset_df,
+                        weights = [(stock_weights/500), (stock_weights/500),(stock_weights/500),(stock_weights/500),(stock_weights/500),.025,.025,(bond_weights/100)],
+                        num_simulation=150,
+                        num_trading_days=252*int(investment_period)
+                    )
+
+                    st.warning('WARNING: May take a few minutes to run!', icon="🚨")
+                    with st.spinner("Running Monte Carlo Simulation..."):
+
+                        sim_returns.calc_cumulative_return() # Forecast cumulative returns
+
+                        plot = sim_returns.plot_simulation().figure # To depict an image with simulation outcomes
+
+                        # Add labels to the x-axis and y-axis
+                        plt.xlabel('Time (# of Trading Days)')
+                        plt.ylabel('Cumulative Return (%)')
+
+                        time.sleep(5)
+
+                    st.write(plot) 
+                
+                if str(portfolio_type).lower().strip() == 'moderate risk portfolio':
+                    asset_df = pd.concat([MRK, V, HD, PFE, ABBV, AGG, AMZN, BTC], axis=1, keys=['MRK', 'V', 'HD', 'PFE', 'ABBV', 'AGG', 'AMZN', 'BTC'])
+                    asset_df = asset_df.dropna()
+
+                    # Configuring a Monte Carlo simulation to forecast Y years of cumulative returns
+                    stock_weights = float(weights_list[0]) * 100
+                    bond_weights = float(weights_list[1]) * 100
+                    sim_returns = MCSimulation(
+                        portfolio_data = asset_df,
+                        weights = [(stock_weights/500), (stock_weights/500),(stock_weights/500),(stock_weights/500),(stock_weights/500),.025,.025,(bond_weights/100)],
+                        num_simulation=150,
+                        num_trading_days=252*int(investment_period)
+                    )
+
+                    st.warning('WARNING: May take a few minutes to run!', icon="🚨")
+                    with st.spinner("Running Monte Carlo Simulation..."):
+
+                        sim_returns.calc_cumulative_return() # Forecast cumulative returns
+
+                        plot = sim_returns.plot_simulation().figure # To depict an image with simulation outcomes
+
+                        # Add labels to the x-axis and y-axis
+                        plt.xlabel('Time (# of Trading Days)')
+                        plt.ylabel('Cumulative Return (%)')
+
+                        time.sleep(5)
+
+                    st.write(plot)  
+
+
+        if user_input_MC.lower().strip() == 'no' or user_input_MC.lower().strip() == 'n': 
+            message("Thank you for using our investment portfolio generator!", seed=21, key=45)
+            st.balloons() 

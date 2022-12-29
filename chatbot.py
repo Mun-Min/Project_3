@@ -8,12 +8,12 @@ import streamlit as st
 from streamlit_chat import message
 import pandas as pd
 
-from chatbot_functions import verifyUserAge
-from chatbot_functions import determine_weights
-from chatbot_functions import allocate_portfolio
-from chatbot_functions import display_portfolio_allocation
-from chatbot_functions import display_forecasts
-
+from chatbot_functions_copy import verifyUserAge
+from chatbot_functions_copy import determine_weights
+from chatbot_functions_copy import allocate_portfolio
+from chatbot_functions_copy import display_portfolio_allocation
+from chatbot_functions_copy import display_forecasts
+from chatbot_functions_copy import run_MC_simulation
 
 st.markdown("## Investment Portfolio Generator")
 st.markdown("---")
@@ -62,14 +62,15 @@ def chatbot():
                                 if str(portfolio_type).lower().strip() == 'high risk portfolio': 
 
                                     # generate a High Risk Portfolio based on expected return vs risk (MPT)
-                                    # stocks --> TSLA, NVDA 
+                                    # stocks --> 'TSLA', 'NVDA', 'LLY', 'AAPL', 'UNH', 'MA'
                                     # bonds --> Treasury Yield 10yr 
                                     # crypto --> ETH
 
-                                    #portfolio_list = ['TSLA', 'NVDA', '10yr Treasury Yield', 'ETH']
-                                    #df = pd.DataFrame({'Chosen Assets': portfolio_list})
-
-                                    df = pd.DataFrame({'Stocks': ['TSLA', 'NVDA'], 'Bonds': ['10yr Treasury Yield', '-'], 'Crypto': ['ETH', '-']})
+                                    df = pd.DataFrame(
+                                        {'Stocks': ['TSLA', 'NVDA', 'LLY', 'AAPL', 'UNH', 'MA'],
+                                         'Bonds': ['10yr Treasury Yield', '-', '-', '-', '-', '-'], 
+                                         'Crypto': ['ETH', '-', '-', '-', '-', '-']
+                                        })
                                     message('Your High-Risk Portfolio contains the following assets: ', seed=21, key=17)
                                     st.table(df) 
 
@@ -86,25 +87,30 @@ def chatbot():
                                     message("Would you like me to display forecasts of each asset in your portfolio?", seed=21, key=30)
                                     user_input = st.sidebar.text_input("Display forecasts? (yes/no): ")
                                     message(user_input, is_user=True, seed=1, key=31)
-
+                 
                                     # display prophet model forecasts
                                     display_forecasts(user_input, portfolio_type)
-                                
+
+                                    # run MC simulation
+                                    if user_input.lower().strip() == 'no' or user_input.lower().strip() == 'n': 
+                                        message("Before you leave, would you like to run a Monte Carlo Simulation on your selected portfolio?", seed=21, key=42)
+                                        st.warning('Monte Carlo Simulation, also known as the Monte Carlo Method or a multiple probability simulation, is a mathematical technique, which is used to estimate the possible outcomes of an uncertain event, in this case projecting cumulative returns for a selected portfolio!', icon="💡") 
+                                        user_input_MC = st.sidebar.text_input("Run Monte Carlo Simulation? (yes/no): ")
+                                        message(user_input_MC, is_user=True, seed=1, key=46)
+                                        run_MC_simulation(user_input_MC, portfolio_type)
+
+
                                 if str(portfolio_type).lower().strip() == 'low risk portfolio': 
 
                                     # generate a Low Risk Portfolio based on expected return vs risk 
-                                    # stocks --> PEP, PG, KO, JNJ, BRK-B, MRK, PFE, XOM, CVX, JPM, HD, V 
+                                    # stocks --> 'PEP', 'PG', 'JNJ', 'KO', 'JPM', 'BAC', 'BRK-B'
                                     # bonds --> Treasury Yield 30yr 
                                     # crypto --> BTC
 
-                                    #portfolio_list = ['PEP', 'PG', 'KO', 'JNJ', 'BRK-B', 'MRK', 'PFE', 
-                                    #                  'XOM', 'CVX','JPM', 'HD', 'V', '30yr Treasury Yield', 'BTC']
-                                    #df = pd.DataFrame({'Chosen Assets': portfolio_list})
-
                                     df = pd.DataFrame(
-                                        {'Stocks': ['PEP', 'PG', 'KO', 'JNJ', 'BRK-B', 'MRK', 'PFE', 'XOM', 'CVX','JPM', 'HD', 'V'], 
-                                         'Bonds': ['30yr Treasury Yield', '-', '-', '-', '-', '-', '-', '-', '-', '-', '-', '-'], 
-                                         'Crypto': ['BTC', '-', '-', '-', '-', '-', '-', '-', '-', '-', '-', '-']
+                                        {'Stocks': ['PEP', 'PG', 'JNJ', 'KO', 'JPM', 'BAC', 'BRK-B'], 
+                                         'Bonds': ['30yr Treasury Yield', '-', '-', '-', '-', '-', '-'], 
+                                         'Crypto': ['BTC', '-', '-', '-', '-', '-', '-']
                                         })
                                     message('Your Low-Risk Portfolio contains the following assets: ', seed=21, key=18)
                                     st.table(df) 
@@ -127,21 +133,25 @@ def chatbot():
                                     # display prophet model forecasts
                                     display_forecasts(user_input, portfolio_type)
 
+                                    # run MC simulation
+                                    if user_input.lower().strip() == 'no' or user_input.lower().strip() == 'n': 
+                                        message("Before you leave, would you like to run a Monte Carlo Simulation on your selected portfolio?", seed=21, key=47)
+                                        st.warning('Monte Carlo Simulation, also known as the Monte Carlo Method or a multiple probability simulation, is a mathematical technique, which is used to estimate the possible outcomes of an uncertain event, in this case projecting cumulative returns for a selected portfolio!', icon="💡") 
+                                        user_input_MC = st.sidebar.text_input("Run Monte Carlo Simulation? (yes/no): ")
+                                        message(user_input_MC, is_user=True, seed=1, key=48)
+                                        run_MC_simulation(user_input_MC, portfolio_type)
+
                                 if str(portfolio_type).lower().strip() == 'moderate risk portfolio': 
 
                                     # generate a Moderate Risk Portfolio portfolio based on expected return vs risk 
-                                    # stocks --> UNH, MSFT, LLY, MA, GOOG, GOOGL, ABBV, BAC, AAPL, AMZN, META
+                                    # stocks --> 'MRK', 'V', 'HD', 'PFE', 'ABBV', 'AMZN'
                                     # bonds --> Treasury Yield 30yr 
                                     # crypto --> BTC
 
-                                    #portfolio_list = ['UNH', 'MSFT', 'LLY', 'MA', 'GOOG', 'GOOGL', 'ABBV', 
-                                    #                  'BAC', 'AAPL','AMZN', 'META', '30yr Treasury Yield', 'BTC']
-                                    #df = pd.DataFrame({'Chosen Assets': portfolio_list})
-
                                     df = pd.DataFrame(
-                                        {'Stocks': ['UNH', 'MSFT', 'LLY', 'MA', 'GOOG', 'GOOGL', 'ABBV', 'BAC', 'AAPL','AMZN', 'META'], 
-                                         'Bonds': ['30yr Treasury Yield', '-', '-', '-', '-', '-', '-', '-', '-', '-', '-'], 
-                                         'Crypto': ['BTC', '-', '-', '-', '-', '-', '-', '-', '-', '-', '-']
+                                        {'Stocks': ['MRK', 'V', 'HD', 'PFE', 'ABBV','AMZN'], 
+                                         'Bonds': ['30yr Treasury Yield', '-', '-', '-', '-', '-'],
+                                         'Crypto': ['BTC', '-', '-', '-', '-', '-']
                                         })
                                     message('Your Moderate-Risk Portfolio contains the following assets: ', seed=21, key=19)
                                     st.table(df) 
@@ -163,6 +173,14 @@ def chatbot():
                                     # display prophet model forecasts
                                     display_forecasts(user_input, portfolio_type)
 
+                                    # run MC simulation
+                                    if user_input.lower().strip() == 'no' or user_input.lower().strip() == 'n': 
+                                        message("Before you leave, would you like to run a Monte Carlo Simulation on your selected portfolio?", seed=21, key=49)
+                                        st.warning('Monte Carlo Simulation, also known as the Monte Carlo Method or a multiple probability simulation, is a mathematical technique, which is used to estimate the possible outcomes of an uncertain event, in this case projecting cumulative returns for a selected portfolio!', icon="💡") 
+                                        user_input_MC = st.sidebar.text_input("Run Monte Carlo Simulation? (yes/no): ")
+                                        message(user_input_MC, is_user=True, seed=1, key=50)
+                                        run_MC_simulation(user_input_MC, portfolio_type)
+
                             else: 
                                 message("I'm sorry, but it looks like you entered an invalid portfolio type. Please enter a valid portfolio type!", seed=21, key=20)
                     else:
@@ -173,7 +191,3 @@ def chatbot():
 
 # call chatbot function 
 chatbot() 
-
-
-# TO:DO --> display monte carlo simulations for each portfolio type 
-#           figure out a way to tune Prophet Model to produce more accurate results
