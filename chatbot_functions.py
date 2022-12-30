@@ -391,7 +391,7 @@ def run_MC_simulation(user_input_MC, portfolio_type):
                         sim_returns = MCSimulation(
                             portfolio_data = asset_df,
                             weights = [(stock_weights/500), (stock_weights/500),(stock_weights/500),(stock_weights/500),(stock_weights/500),.025,.025,(bond_weights/100)],
-                            num_simulation=150,
+                            num_simulation=100,
                             num_trading_days=252*int(investment_period)
                         )
                         
@@ -430,7 +430,7 @@ def run_MC_simulation(user_input_MC, portfolio_type):
                         sim_returns = MCSimulation(
                             portfolio_data = asset_df,
                             weights = [(stock_weights/500), (stock_weights/500),(stock_weights/500),(stock_weights/500),(stock_weights/500),.025,.025,(bond_weights/100)],
-                            num_simulation=150,
+                            num_simulation=100,
                             num_trading_days=252*int(investment_period)
                         )
 
@@ -469,7 +469,7 @@ def run_MC_simulation(user_input_MC, portfolio_type):
                         sim_returns = MCSimulation(
                             portfolio_data = asset_df,
                             weights = [(stock_weights/500), (stock_weights/500),(stock_weights/500),(stock_weights/500),(stock_weights/500),.025,.025,(bond_weights/100)],
-                            num_simulation=150,
+                            num_simulation=100,
                             num_trading_days=252*int(investment_period)
                         )
 
