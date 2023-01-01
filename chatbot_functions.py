@@ -301,7 +301,7 @@ def run_MC_simulation(user_input_MC, portfolio_type):
 
         if user_input_MC.lower().strip() == 'yes' or user_input_MC.lower().strip() == 'y': 
             message("How many years would you like to invest for?", seed=21, key=41)
-            investment_period = st.sidebar.text_input("Enter Investment Period: ")
+            investment_period = st.text_input(' ', placeholder='Enter Investment Period')
             message(investment_period, is_user=True, seed=1, key=43)
 
             if investment_period:                         

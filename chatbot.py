@@ -8,15 +8,14 @@ import streamlit as st
 from streamlit_chat import message
 import pandas as pd
 
-from chatbot_functions import verifyUserAge
-from chatbot_functions import determine_weights
-from chatbot_functions import allocate_portfolio
-from chatbot_functions import display_portfolio_allocation
-from chatbot_functions import display_forecasts
-from chatbot_functions import run_MC_simulation
+from chatbot_functions_copy import verifyUserAge
+from chatbot_functions_copy import determine_weights
+from chatbot_functions_copy import allocate_portfolio
+from chatbot_functions_copy import display_portfolio_allocation
+from chatbot_functions_copy import display_forecasts
+from chatbot_functions_copy import run_MC_simulation
 
 st.markdown("## Investment Portfolio Generator")
-st.markdown("---")
 
 # chatbot function
 def chatbot():
@@ -25,7 +24,7 @@ def chatbot():
     message("Please enter your age", seed=21, key=11)
 
     # Ask the user for their age
-    user_age = st.sidebar.text_input("Enter your age: ")
+    user_age = st.text_input(' ', placeholder='Enter your age')
     message(user_age, is_user=True, seed=1, key=12)
 
 
@@ -46,14 +45,14 @@ def chatbot():
 
                 # Ask the user for their desired investment amount 
                 message("Please enter your desired investment amount in USD", seed=21, key=14)
-                user_investment_amount = st.sidebar.text_input("Enter investment amount in USD: ")
+                user_investment_amount = st.text_input(' ', placeholder='Enter investment amount in USD')
                 message(user_investment_amount, is_user=True, seed=1, key=15)
             
                 # Ask the user for their desired portfolio type (risk tolerance)
                 if user_investment_amount: 
                     if user_investment_amount.isnumeric():
                         message("Please enter a portfolio type that matches your risk tolerance (High Risk Portfolio, Low Risk Portfolio, Moderate Risk Portfolio)", seed=21, key=16)
-                        portfolio_type = st.sidebar.text_input('Enter portfolio type: ')
+                        portfolio_type = st.text_input(' ', placeholder='Enter portfolio type')
 
                         valid_portfolio_types = ['high risk portfolio', 'low risk portfolio', 'moderate risk portfolio']
 
@@ -85,7 +84,7 @@ def chatbot():
 
                                     # Ask the user for their desired investment amount 
                                     message("Would you like me to display forecasts of each asset in your portfolio?", seed=21, key=30)
-                                    user_input = st.sidebar.text_input("Display forecasts? (yes/no): ")
+                                    user_input = st.text_input(' ', placeholder='Display forecasts? (enter yes/no)')
                                     message(user_input, is_user=True, seed=1, key=31)
                  
                                     # display prophet model forecasts
@@ -94,7 +93,7 @@ def chatbot():
                                     # run MC simulation
                                     if user_input.lower().strip() == 'no' or user_input.lower().strip() == 'n': 
                                         st.warning('Monte Carlo Simulation, also known as the Monte Carlo Method or a multiple probability simulation, is a mathematical technique, which is used to estimate the possible outcomes of an uncertain event, in this case projecting cumulative returns for a selected portfolio!', icon="💡") 
-                                        user_input_MC = st.sidebar.text_input("Run Monte Carlo Simulation? (yes/no): ")
+                                        user_input_MC = st.text_input(' ', placeholder='Run Monte Carlo Simulation? (enter yes/no)')
                                         message(user_input_MC, is_user=True, seed=1, key=46)
                                         run_MC_simulation(user_input_MC, portfolio_type)
 
@@ -126,7 +125,7 @@ def chatbot():
 
                                     # Ask the user for their desired investment amount 
                                     message("Would you like me to display forecasts of each asset in your portfolio?", seed=21, key=35)
-                                    user_input = st.sidebar.text_input("Display forecasts? (yes/no): ")
+                                    user_input = st.text_input(' ', placeholder='Display forecasts? (enter yes/no)')
                                     message(user_input, is_user=True, seed=1, key=36)
 
                                     # display prophet model forecasts
@@ -135,7 +134,7 @@ def chatbot():
                                     # run MC simulation
                                     if user_input.lower().strip() == 'no' or user_input.lower().strip() == 'n': 
                                         st.warning('Monte Carlo Simulation, also known as the Monte Carlo Method or a multiple probability simulation, is a mathematical technique, which is used to estimate the possible outcomes of an uncertain event, in this case projecting cumulative returns for a selected portfolio!', icon="💡") 
-                                        user_input_MC = st.sidebar.text_input("Run Monte Carlo Simulation? (yes/no): ")
+                                        user_input_MC = st.text_input(' ', placeholder='Run Monte Carlo Simulation? (enter yes/no)')
                                         message(user_input_MC, is_user=True, seed=1, key=48)
                                         run_MC_simulation(user_input_MC, portfolio_type)
 
@@ -165,7 +164,7 @@ def chatbot():
 
                                     # Ask the user for their desired investment amount 
                                     message("Would you like me to display forecasts of each asset in your portfolio?", seed=21, key=37)
-                                    user_input = st.sidebar.text_input("Display forecasts? (yes/no): ")
+                                    user_input = st.text_input(' ', placeholder='Display forecasts? (enter yes/no)')
                                     message(user_input, is_user=True, seed=1, key=38)
 
                                     # display prophet model forecasts
@@ -174,7 +173,7 @@ def chatbot():
                                     # run MC simulation
                                     if user_input.lower().strip() == 'no' or user_input.lower().strip() == 'n': 
                                         st.warning('Monte Carlo Simulation, also known as the Monte Carlo Method or a multiple probability simulation, is a mathematical technique, which is used to estimate the possible outcomes of an uncertain event, in this case projecting cumulative returns for a selected portfolio!', icon="💡") 
-                                        user_input_MC = st.sidebar.text_input("Run Monte Carlo Simulation? (yes/no): ")
+                                        user_input_MC = st.text_input(' ', placeholder='Run Monte Carlo Simulation? (enter yes/no)')
                                         message(user_input_MC, is_user=True, seed=1, key=50)
                                         run_MC_simulation(user_input_MC, portfolio_type)
 
