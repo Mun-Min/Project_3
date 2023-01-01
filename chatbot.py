@@ -8,12 +8,12 @@ import streamlit as st
 from streamlit_chat import message
 import pandas as pd
 
-from chatbot_functions_copy import verifyUserAge
-from chatbot_functions_copy import determine_weights
-from chatbot_functions_copy import allocate_portfolio
-from chatbot_functions_copy import display_portfolio_allocation
-from chatbot_functions_copy import display_forecasts
-from chatbot_functions_copy import run_MC_simulation
+from chatbot_functions import verifyUserAge
+from chatbot_functions import determine_weights
+from chatbot_functions import allocate_portfolio
+from chatbot_functions import display_portfolio_allocation
+from chatbot_functions import display_forecasts
+from chatbot_functions import run_MC_simulation
 
 st.markdown("## Investment Portfolio Generator")
 
