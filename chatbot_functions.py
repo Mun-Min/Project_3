@@ -304,6 +304,8 @@ def run_MC_simulation(user_input_MC, portfolio_type):
             investment_period = st.text_input(' ', placeholder='Enter Investment Period')
             message(investment_period, is_user=True, seed=1, key=43)
 
+            investment_period = investment_period.strip()
+
             if investment_period:                         
                 if investment_period.isnumeric(): 
                     AAPL = pd.read_csv(('./Data Collection Notebooks/asset_historical_prices/AAPL.csv'), index_col='Date', parse_dates=True, infer_datetime_format=True)

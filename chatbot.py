@@ -27,6 +27,7 @@ def chatbot():
     user_age = st.text_input(' ', placeholder='Enter your age')
     message(user_age, is_user=True, seed=1, key=12)
 
+    user_age = user_age.strip() 
 
     # Check if the user has entered a response
     if user_age:
@@ -47,7 +48,9 @@ def chatbot():
                 message("Please enter your desired investment amount in USD", seed=21, key=14)
                 user_investment_amount = st.text_input(' ', placeholder='Enter investment amount in USD')
                 message(user_investment_amount, is_user=True, seed=1, key=15)
-            
+
+                user_investment_amount = user_investment_amount.strip() 
+
                 # Ask the user for their desired portfolio type (risk tolerance)
                 if user_investment_amount: 
                     if user_investment_amount.isnumeric():
