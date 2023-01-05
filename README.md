@@ -2,6 +2,16 @@
 
 <img align="middle" width="850" height="500" src="https://img.freepik.com/free-vector/isometric-chatbot-flowchart-with-smartphones-computers-message-bubbles_1284-55214.jpg?w=1380&t=st=1672885485~exp=1672886085~hmac=3564b76784e0d8b531dadd28cc459a78dfa87f3d220b8b46af532c9ec4f4a0a5">
 
+## Table of Contents:
+1. [Summary](#summary)
+
+2. [Data Techniques](#data-techniques)
+
+3. [Chatbot Development](#chatbot-development)
+   
+4. [Conclusion](#conclusion)
+
+---
 
 ## Run the Chatbot using Streamlit Cloud:
 
@@ -88,3 +98,10 @@ Data Sources: Yahoo Finance Python Package
 Gathered 10 years of Historical Data
 
 ## Chatbot Development:
+
+After doing extensive research on how to create a chatbot via Streamlit & Python, we came across a special streamlit package called streamlit-chat! This package allowed us to create a simple UI that mimics the look of a chatbot.
+
+<img align="middle" width="800" height="500" src="./Images/investachat.png">
+
+
+## Conclusion:
