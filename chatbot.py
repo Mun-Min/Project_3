@@ -33,7 +33,7 @@ def chatbot():
     if user_age:
     
         if user_age.isdigit() == False: 
-            message("I'm sorry, but it looks like you entered an invalid number. Please enter a valid number!", seed=21, key=13)
+            message("I'm sorry, but it looks like you entered an invalid number. Please enter a valid whole number!", seed=21, key=13)
     
         else:
             # Convert the user's age to an integer
@@ -183,7 +183,7 @@ def chatbot():
                             else: 
                                 message("I'm sorry, but it looks like you entered an invalid portfolio type. Please enter a valid portfolio type!", seed=21, key=20)
                     else:
-                        message("I'm sorry, but it looks like you entered an invalid number. Please enter a valid number!", seed=21)
+                        message("I'm sorry, but it looks like you entered an invalid number. Please enter a valid whole number!", seed=21)
     else:
         # The user hasn't entered a response yet, so don't show any messages in the chat widget
         pass
