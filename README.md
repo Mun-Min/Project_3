@@ -40,15 +40,15 @@ You must download the following packages in order to run the Chatbot:
     import plotly.express as px
     import plotly.graph_objects as go
 
-
-
-
-
-
-
-
-
+---
 
 <p align="center">
   <img src="./Images/Project_Roadmap.png"/>
 </p>
+
+> Note:
+> Our team was interested in expanding our previous project: 
+> 
+> [Developing an Investment Portfolio Utilizing Machine Learning]('https://github.com/Mun-Min/Project_Two')
+>
+> 
