@@ -17,7 +17,7 @@
 
 Link to ChatBot --> https://investachat.streamlit.app/
 
-## Running the ChatBot Locally:
+## Run the ChatBot Locally:
 You must download the following packages in order to run the ChatBot:
 
 <span style="color:white;font-weight:100;font-size:15px">
@@ -99,7 +99,7 @@ Gathered 10 years of Historical Data
 
 ## ChatBot Development:
 
-After doing extensive research on how to create a chatbot via Streamlit & Python, we came across a special streamlit package called streamlit-chat! This package allowed us to create a simple UI that mimics the look of a chatbot.
+After doing extensive research on how to create a chatbot via Streamlit & Python, we came across a special streamlit package called streamlit-chat! This package allowed us to create a simple UI that mimics the look and functionality of a chatbot.
 
 <img align="middle" width="800" height="500" src="./Images/investachat.png">
 
