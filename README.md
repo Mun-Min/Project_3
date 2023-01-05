@@ -21,6 +21,12 @@ Link to ChatBot --> https://investachat.streamlit.app/
 You must download the following packages in order to run the ChatBot:
 
 <span style="color:white;font-weight:100;font-size:15px">
+    <b>Run ChatBot:</b>
+</span>
+
+    streamlit run chatbot.py
+
+<span style="color:white;font-weight:100;font-size:15px">
     <b>Python (version 3.9.12):</b>
 </span>
 
@@ -141,3 +147,5 @@ Functions in chatbot_functions.py:
 ## Conclusion:
 
 Our objective in the preceding project was to build a chatbot that could generate an investment portfolio based on particular user inputs. Unfortunately, we were unable to achieve this due to certain knowledge shortages. However, upon learning how to use Streamlit to design easy but stylish user interfaces, we as a team chose to try again to create a chatbot that can generate an investment portfolio for the user using Streamlit & Python.
+
+<iframe src="https://investachat.streamlit.app/" width="800" height="600"></iframe>
