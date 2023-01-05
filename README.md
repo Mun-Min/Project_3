@@ -48,5 +48,4 @@ You must download the following packages in order to run the Chatbot:
 
 > Note:
 > Our team was interested in expanding our previous project:
-
 [Developing an Investment Portfolio Utilizing Machine Learning](https://github.com/Mun-Min/Project_Two)
