@@ -108,7 +108,7 @@ ChatBot Main Files:
   * [chatbot.py](./chatbot.py)
   * [chatbot_functions.py](./chatbot_functions.py)
 
-The chatbot.py file runs the functions located in chatbot_functions.py to produce the necessary results.
+`The chatbot.py file runs the functions located in chatbot_functions.py to produce the necessary results.`
 
 Functions in chatbot_functions.py:
 
