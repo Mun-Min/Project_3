@@ -101,7 +101,7 @@ Gathered 10 years of Historical Data
 
 After doing extensive research on how to create a chatbot via Streamlit & Python, we came across a special streamlit package called streamlit-chat! This package allowed us to create a simple UI that mimics the look of a chatbot.
 
-<img align="middle" width="700" height="450" src="./Images/investachat.png">
+<img align="middle" width="800" height="500" src="./Images/investachat.png">
 
 
 ## Conclusion:
