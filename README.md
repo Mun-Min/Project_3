@@ -7,18 +7,18 @@
 
 2. [Data Techniques](#data-techniques)
 
-3. [Chatbot Development](#chatbot-development)
+3. [ChatBot Development](#chatbot-development)
    
 4. [Conclusion](#conclusion)
 
 ---
 
-## Run the Chatbot using Streamlit Cloud:
+## Run the ChatBot using Streamlit Cloud:
 
-Link to Chatbot --> https://investachat.streamlit.app/
+Link to ChatBot --> https://investachat.streamlit.app/
 
-## Running the Chatbot Locally:
-You must download the following packages in order to run the Chatbot:
+## Running the ChatBot Locally:
+You must download the following packages in order to run the ChatBot:
 
 <span style="color:white;font-weight:100;font-size:15px">
     <b>Python (version 3.9.12):</b>
@@ -97,11 +97,47 @@ Data Sources: Yahoo Finance Python Package
 
 Gathered 10 years of Historical Data
 
-## Chatbot Development:
+## ChatBot Development:
 
 After doing extensive research on how to create a chatbot via Streamlit & Python, we came across a special streamlit package called streamlit-chat! This package allowed us to create a simple UI that mimics the look of a chatbot.
 
 <img align="middle" width="800" height="500" src="./Images/investachat.png">
 
+ChatBot Main Files:
+
+  * [chatbot.py](./chatbot.py)
+  * [chatbot_functions.py](./chatbot_functions.py)
+
+The chatbot.py file runs the functions located in chatbot_functions.py to produce the necessary results.
+
+Functions in chatbot_functions.py:
+
+  * verifyUserAge
+
+    * verify if the user is old enough to use the application
+
+  * determine_weights
+
+    * determine the portfolio weights based off of the user's age
+
+  * allocate_portfolio
+
+    * allocate the user's investment amount towards each asset class according to the portfolio weights
+
+  * display_portfolio_allocation
+
+    * display a donut chart visualization of the user's portfolio allocation
+  
+  * display_forecasts
+
+    * display Prophet Forecasts to the user along with historical prices
+
+  * run_MC_simulation
+
+    * run a Monte Carlo Simulation based on the selected portfolio type
+
+> After much deliberation, the team decided to offer three portfolio options for the user to choose from: high risk, low risk, and moderate risk. The chatbot will then create a portfolio with assets that align with the chosen level of risk. 
 
 ## Conclusion:
+
+Our objective in the preceding project was to build a chatbot that could generate an investment portfolio based on particular user inputs. Unfortunately, we were unable to achieve this due to certain knowledge shortages. However, upon learning how to use Streamlit to design easy but stylish user interfaces, we as a team chose to try again to create a chatbot that can generate an investment portfolio for the user using Streamlit & Python.
