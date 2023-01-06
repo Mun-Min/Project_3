@@ -393,7 +393,7 @@ def run_MC_simulation(user_input_MC, portfolio_type):
                         sim_returns = MCSimulation(
                             portfolio_data = asset_df,
                             weights = [(stock_weights/500), (stock_weights/500),(stock_weights/500),(stock_weights/500),(stock_weights/500),.025,.025,(bond_weights/100)],
-                            num_simulation=100,
+                            num_simulation=50,
                             num_trading_days=252*int(investment_period)
                         )
                         
@@ -421,7 +421,8 @@ def run_MC_simulation(user_input_MC, portfolio_type):
                         # Display the plot
                         st.write(plot)
 
-                    
+                        st.balloons() 
+
                     if str(portfolio_type).lower().strip() == 'low risk portfolio':
                         asset_df = pd.concat([PEP, PG, JNJ, KO, JPM, BAC, BRK_B, AGG], axis=1, keys=['PEP', 'PG', 'JNJ', 'KO', 'JPM', 'BAC', 'BRK-B', 'AGG'])
                         asset_df = asset_df.dropna()
@@ -432,7 +433,7 @@ def run_MC_simulation(user_input_MC, portfolio_type):
                         sim_returns = MCSimulation(
                             portfolio_data = asset_df,
                             weights = [(stock_weights/500), (stock_weights/500),(stock_weights/500),(stock_weights/500),(stock_weights/500),.025,.025,(bond_weights/100)],
-                            num_simulation=100,
+                            num_simulation=50,
                             num_trading_days=252*int(investment_period)
                         )
 
@@ -459,7 +460,8 @@ def run_MC_simulation(user_input_MC, portfolio_type):
 
                         # Display the plot
                         st.write(plot)
- 
+                        
+                        st.balloons() 
 
                     if str(portfolio_type).lower().strip() == 'moderate risk portfolio':
                         asset_df = pd.concat([MRK, V, HD, PFE, ABBV, AGG, AMZN, BTC], axis=1, keys=['MRK', 'V', 'HD', 'PFE', 'ABBV', 'AGG', 'AMZN', 'BTC'])
@@ -471,7 +473,7 @@ def run_MC_simulation(user_input_MC, portfolio_type):
                         sim_returns = MCSimulation(
                             portfolio_data = asset_df,
                             weights = [(stock_weights/500), (stock_weights/500),(stock_weights/500),(stock_weights/500),(stock_weights/500),.025,.025,(bond_weights/100)],
-                            num_simulation=100,
+                            num_simulation=50,
                             num_trading_days=252*int(investment_period)
                         )
 
@@ -499,7 +501,8 @@ def run_MC_simulation(user_input_MC, portfolio_type):
                         # Display the plot
                         st.write(plot)
 
-
+                        st.balloons() 
+                        
                 if investment_period.isnumeric() == False: 
                     message("Please enter a valid number!", seed=21, key=51)
                 
