@@ -2,6 +2,7 @@
 #      This python file includes the neccesary functions that allow the chatbot's aggregations to run         #          
 ###############################################################################################################
 
+# import libraries 
 from streamlit_chat import message
 import streamlit as st
 import matplotlib.pyplot as plt
