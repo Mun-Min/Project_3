@@ -15,7 +15,7 @@
 
 ## Run the ChatBot using Streamlit Cloud:
 
-Link to ChatBot --> https://investachat.streamlit.app/
+Link to ChatBot --> https://investachatbot.streamlit.app/ 
 
 ## Run the ChatBot Locally:
 You must download the following packages in order to run the ChatBot:
